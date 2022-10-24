@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:c="http://java.sun.com/jsp/jstl/core" 
+    xmlns:p="http://primefaces.org/ui"
+	xmlns:jsf="http://xmlns.jcp.org/jsf">
+	
+    <ui:insert name="head">
+        <ui:include src="head.xhtml" />
+    </ui:insert>
+
+    <h:body class="">
+    	
+		<div id="wrapper">
+			<ui:insert name="menu">
+	             <ui:include src="menu.xhtml" />
+			</ui:insert>
+			<div id="page-wrapper" class="gray-bg">
+	       		<div class="row border-bottom">
+			        <ui:insert name="nav-top">
+			             <ui:include src="header.xhtml" />
+					</ui:insert>
+				</div>
+				<div class="row wrapper border-bottom white-bg page-heading">
+	                   <ol class="breadcrumb">
+	                       <li class="breadcrumb-item">
+	                           <a href="index.html">This is</a>
+	                       </li>
+	                       <li class="breadcrumb-item active">
+	                           <strong>Breadcrumb</strong>
+	                       </li>
+	                   </ol>
+	            </div>
+				
+				<div class="wrapper wrapper-content">
+			        <ui:insert name="content">
+			        	<ui:insert name="content" />
+					</ui:insert>
+				</div>
+	
+				<ui:insert name="footer">
+			        <ui:include src="footer.xhtml" />
+			    </ui:insert>
+	        </div>
+        </div>
+<!-- 		<script src="../resources/js/jquery-3.1.1.min.js"></script> -->
+
+		<h:outputScript name="js/popper.min.js" />
+		<h:outputScript name="js/bootstrap.js" />
+		<h:outputScript name="js/plugins/metisMenu/jquery.metisMenu.js" />
+		<h:outputScript name="js/plugins/slimscroll/jquery.slimscroll.min.js" />
+		<h:outputScript name="js/inspinia.js" />
+		<h:outputScript name="js/plugins/pace/pace.min.js" />
+
+    </h:body>
+</html>

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:composition template="/layout/layout.xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:jsf="http://xmlns.jcp.org/jsf">
+
+	<ui:define name="content">
+		<div class="wrapper wrapper-content animated fadeInRight">
+	        <div class="row">
+	            <div class="col-lg-12">
+	                <div class="ibox float-e-margins">
+	                    <div class="ibox-title"><h:head></h:head>
+	                        <h5>
+	                            <i class="fa fa-edit"></i> Casilla / Editar/Crear
+	                        </h5>
+	                        <div class="ibox-tools">
+	                            <a class="collapse-link">
+	                                <i class="fa fa-chevron-up"></i>
+	                            </a>
+	                        </div>
+	                    </div>
+	                    <div class="ibox-content">
+							<f:metadata>
+							    <f:viewParam name="id" value="#{gestionCasillas.id}" /> 
+							    <f:event type="preRenderView" listener="#{gestionCasillas.preRenderView}"/>
+							</f:metadata>
+										
+							<form jsf:id="casilla" class="form-horizontal">
+															
+								<div class="row mt-2">
+									<div class="col-sm-1 pt-2">
+										<label class="control-label">Nombre</label>
+									</div>
+                                    <div class="col-sm-6">
+                                    	<input class="form-control" placeholder="Nombre" type="text" jsf:id="nombre" name="nombre" value="#{gestionCasillas.casilla.nombre}" required="true"/>
+                                    	<p:message for="nombre" style="color:red" />
+                                   	</div>
+								</div>
+								
+								<div class="row mt-2">
+									<div class="col-sm-1 pt-2">
+										<label class="control-label">Unidad de medida</label>
+									</div>
+                                    <div class="col-sm-6">
+                                    	<input class="form-control" placeholder="Unidad de medida" type="text" jsf:id="unidad_de_medida" name="unidad_de_medida" value="#{gestionCasillas.casilla.unidad_de_medida}" required="true"/>
+                                    	<p:message for="unidad_de_medida" style="color:red" />
+                                   	</div>
+								</div>
+								
+								<div class="row">
+									<div class="col-sm-1 pt-2">
+										<label class="control-label">Tipo de valor</label>
+									</div>
+									<div class="col-sm-6">
+										<p:selectOneMenu id="tipo" disabled="false" value="#{gestionCasillas.casilla.tipo}">
+							   				<f:selectItem itemLabel="[Seleccione]" itemValue="0" itemDisabled="false" noSelectionOption="true"/>
+							   				<f:selectItem itemValue="INT" itemLabel="NUMERO ENTERO"  />
+							   				<f:selectItem itemValue="DOUBLE" itemLabel="NUMERO DECIMAL" />
+							   				<f:selectItem itemValue="BOOLEAN" itemLabel="V o F" />
+							   				<f:selectItem itemValue="STRING" itemLabel="CARACTERES" />
+<!-- 							   				<p:ajax process="tipo"  -->
+<!-- 					                        update="@form" /> -->
+										</p:selectOneMenu>
+										<p:message for="tipo" style="color:red" />
+									</div>
+								</div>
+								
+								<div class="row">
+									<div class="col-sm-1 pt-2">
+										<label class="control-label">Ubicación</label>
+									</div>
+									<div class="col-sm-6">
+										<p:selectOneMenu id="ubicacion" disabled="false" value="#{gestionCasillas.casilla.ubicacion}">
+							   				<f:selectItem itemLabel="[Seleccione]" itemValue="0" itemDisabled="false" noSelectionOption="true"/>
+							   				<f:selectItem itemValue="ADENTRO" itemLabel="ADENTRO"  />
+							   				<f:selectItem itemValue="AFUERA" itemLabel="AFUERA" />
+<!-- 							   				<p:ajax process="ubicacion"  -->
+<!-- 					                        update="@form" /> -->
+										</p:selectOneMenu>
+										<p:message for="ubicacion" style="color:red" />
+									</div>
+								</div>
+                                
+                                <div class="row">
+									<div class="col-sm-1 pt-2">
+										<label class="control-label">Obligatoria</label>
+									</div>
+									<div class="col-sm-6">
+										<p:selectOneMenu id="obligatoria" disabled="false" value="#{gestionCasillas.casilla.obligatoria}">
+							   				<f:selectItem itemLabel="[Seleccione]" itemValue="0" itemDisabled="false" noSelectionOption="true"/>
+							   				<f:selectItem itemValue= "1" itemLabel="OBLIGATORIA"  />
+							   				<f:selectItem itemValue= "0" itemLabel="NO OBLIGATORIA" />
+<!-- 							   				<p:ajax process="obligatoria"  -->
+<!-- 					                        update="@form" /> -->
+										</p:selectOneMenu>
+										<p:message for="obligatoria" style="color:red" />
+									</div>
+								</div>
+								
+								<div class="row mt-2">
+									<div class="col-sm-1 pt-2">
+										<label class="control-label">Descripción</label>
+									</div>
+                                    <div class="col-sm-6">
+                                    	<input class="form-control" placeholder="Descripción" type="text" jsf:id="descripcion" name="descripcion" value="#{gestionCasillas.casilla.descripcion}" required="false"/>
+                                    	<p:message for="nombre" style="color:red" />
+                                   	</div>
+								</div>
+								
+								<div class="hr-line-dashed"></div>
+			
+                                <div class="form-group">
+                                    <div class="col-sm-4 col-sm-offset-2">
+                                        <a class="btn btn-white" href="menuCasillas.xhtml"> Cancelar</a>
+                                        <h:commandButton value="Guardar" rendered="true" 
+											update=":form" action="#{gestionCasillas.insertCasilla()}" class="btn btn-primary">
+										    	<f:param name="id" value="${gestionCasillas.id}" />
+								    			<f:param name="modalidad" value="update" />
+										</h:commandButton>
+                                    </div>
+                                </div>
+							</form>
+						</div>    
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"> 
+
+<h:head></h:head> 
+<body> 
+<h2>Login del Sistema</h2>
+	<h:outputLabel value="Hola soy #{gestionLogin.usuario.nombre}" />
+	<c:if test="#{listarUsuarios.listar().size() > 0}">
+		<h3>Listado de Usuarios</h3>
+		<h:dataTable value="#{listarUsuarios.listar()}" var="usuarios"
+			styleClass="employeeTable" headerClass="employeeTableHeader">
+			<h:column>
+				<f:facet name="header">Nombre</f:facet>    				
+	      		#{usuarios}
+	   		</h:column>
+		</h:dataTable>
+	</c:if>
+	<c:if test="#{listarUsuarios.listaUsuarios.size() == 0}">
+	No hay usuarios seleccionados
+	</c:if>
+</body> 
+</html>
