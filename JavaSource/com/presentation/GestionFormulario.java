@@ -1,5 +1,6 @@
 package com.presentation;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -9,16 +10,19 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.Flash;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 
+import com.exceptions.ServiciosException;
 import com.services.CasillasBean;
 import com.services.FormulariosBean;
 import com.services.UsuariosBean;
 import com.services.dto.FormularioDTO;
+import com.services.dto.UsuarioDTO;
 import com.services.dto.CasillaDTO;
 
 @Named(value="gestionFormularios")
@@ -33,6 +37,7 @@ public class GestionFormulario implements Serializable{
 	private UsuariosBean userBean;
 	@Inject
 	private CasillasBean casillaBean;
+	private UsuarioDTO user;
 	private List<FormularioDTO> listaFormularios;
 	private FormularioDTO formulario;
 	private Long id;
@@ -46,6 +51,28 @@ public class GestionFormulario implements Serializable{
 	public void init(){
 		listaFormularios = listar();
 		formulario = new FormularioDTO();
+		chequeoUsuario();
+	}
+	
+	private void chequeoUsuario() {
+		try {
+			HttpSession ses = ( HttpSession ) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
+			Long userId = (Long) ses.getAttribute("id");
+			
+			user = userBean.buscar(userId);
+		
+			if(user.getTipo().name() == "AFICIONADO") {
+				ExternalContext ec = FacesContext.getCurrentInstance()
+				        .getExternalContext();
+				try {
+					ec.redirect("menuPrincipal.xhtml");
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		} catch (ServiciosException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void preRenderView() {

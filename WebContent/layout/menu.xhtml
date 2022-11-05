@@ -1,4 +1,4 @@
-<nav class="navbar-default navbar-static-side" role="navigation">
+<nav class="navbar-default navbar-static-side" role="navigation" xmlns:c="http://java.sun.com/jsp/jstl/core">
     <div class="sidebar-collapse">
         <ul class="nav metismenu" id="side-menu">
             <li class="nav-header">
@@ -12,32 +12,41 @@
                     IN+
                 </div>
             </li>
+            
+            <c:choose>
+    			<c:when test="#{gestionLogin.usuario.tipo.name() != 'AFICIONADO'}">
+		            <li>
+		                <a href="menuUsuarios.xhtml"><i class="pi pi-users"></i> <span class="nav-label">Usuarios</span></a>
+		            </li>
+		            <li>
+		                <a href=""><i class="pi pi-file"></i> <span class="nav-label">Formularios</span></a>
+		                <ul class="nav nav-second-level collapse">
+		                    <li><a href="menuFormularios.xhtml">Formularios</a></li>
+		                    <li><a href="menuFormularioCasilla.xhtml">Asignar casillas</a></li>
+		                </ul>
+		            </li>
+		            <li>
+		                <a href="menuCasillas.xhtml"><i class="pi pi-box"></i> <span class="nav-label">Casillas</span></a>
+		            </li>
+		            <li>
+		                <a href="menuEstaciones.xhtml"><i class="pi pi-home"></i> <span class="nav-label">Estaciones</span></a>
+		            </li>
+            	</c:when>
+            </c:choose>
             <li>
-                <a href="menuUsuarios.xhtml"><i class="fa fa-th-large"></i> <span class="nav-label">Usuarios</span> <span class="fa arrow"></span></a>
+                <a href="menuMediciones.xhtml"><i class="pi pi-database"></i> <span class="nav-label">Mediciones</span></a>
             </li>
-            <li>
-                <a href=""><i class="fa fa-th-large"></i> <span class="nav-label">Formularios</span> <span class="fa arrow"></span></a>
-                <ul class="nav nav-second-level collapse">
-                    <li><a href="menuFormularios.xhtml">Formularios</a></li>
-                    <li><a href="menuFormularioCasilla.xhtml">Asignar casillas</a></li>
-                </ul>
-            </li>
-            <li>
-                <a href="menuCasillas.xhtml"><i class="fa fa-th-large"></i> <span class="nav-label">Casillas</span> <span class="fa arrow"></span></a>
-            </li>
-            <li>
-                <a href="menuEstaciones.xhtml"><i class="fa fa-th-large"></i> <span class="nav-label">Estaciones</span> <span class="fa arrow"></span></a>
-            </li>
-            <li>
-                <a href="menuMediciones.xhtml"><i class="fa fa-th-large"></i> <span class="nav-label">Mediciones</span> <span class="fa arrow"></span></a>
-            </li>
-            <li>
-                <a href=""><i class="fa fa-diamond"></i> <span class="nav-label">Configuraciones</span></a>
-                <ul class="nav nav-second-level collapse">
-                    <li><a href="menuDepartamentos.xhtml">Departamentos</a></li>
-                    <li><a href="menuCiudades.xhtml">Ciudades</a></li>
-                </ul>
-            </li>
+            <c:choose>
+    			<c:when test="#{gestionLogin.usuario.tipo.name() != 'AFICIONADO'}">
+		            <li>
+		                <a href=""><i class="pi pi-cog"></i> <span class="nav-label">Configuraciones</span></a>
+		                <ul class="nav nav-second-level collapse">
+		                    <li><a href="menuDepartamentos.xhtml">Departamentos</a></li>
+		                    <li><a href="menuCiudades.xhtml">Ciudades</a></li>
+		                </ul>
+		            </li>
+	            </c:when>
+            </c:choose>
         </ul>
     </div>
 </nav>

@@ -7,6 +7,7 @@ import java.util.Hashtable;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -101,10 +102,16 @@ public class LoginBean implements Serializable {
 		return "Login";
 	}
 	
-	public String logout() {
-	    HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
-	    session.invalidate();
-	    return "/Login.xhtml?faces-redirect=true";
+	public void logout() {
+		
+		try {
+			ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+			ec.invalidateSession();
+			ec.redirect("../Login.xhtml");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public String getUsr() {
@@ -133,8 +140,6 @@ public class LoginBean implements Serializable {
 
 	public void login() {
 		try{
-	      System.out.println("Début du test Active Directory");
-
 	      Hashtable<String, String> ldapEnv = new Hashtable<String, String>(11);
 	      ldapEnv.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
 	      

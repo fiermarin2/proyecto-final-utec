@@ -1,5 +1,6 @@
 package com.presentation;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
@@ -7,17 +8,21 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.Flash;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpSession;
 
 import com.entities.Departamento;
 import com.exceptions.ServiciosException;
 import com.services.CiudadesBean;
 import com.services.DepartamentosBean;
+import com.services.UsuariosBean;
 import com.services.dto.CiudadDTO;
 import com.services.dto.DepartamentoDTO;
+import com.services.dto.UsuarioDTO;
 
 @Named(value="gestionCiudades")
 @SessionScoped
@@ -26,14 +31,13 @@ public class GestionCiudades implements Serializable {
 	
 	@Inject
 	private CiudadesBean beanc;
-	
 	@Inject
 	private DepartamentosBean beand;
-	
+	@Inject
+	private UsuariosBean userBean;
+	private UsuarioDTO user;
 	private List<CiudadDTO> listaCiudades;
-	
 	private CiudadDTO ciudad;
-	
 	private Long id;
 	private String modalidad;
 	private String nombre;
@@ -45,6 +49,28 @@ public class GestionCiudades implements Serializable {
 	public void init(){
 		listaCiudades = listar();
 		ciudad = new CiudadDTO();
+		chequeoUsuario();
+	}
+	
+	private void chequeoUsuario() {
+		try {
+			HttpSession ses = ( HttpSession ) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
+			Long userId = (Long) ses.getAttribute("id");
+			
+			user = userBean.buscar(userId);
+		
+			if(user.getTipo().name() == "AFICIONADO") {
+				ExternalContext ec = FacesContext.getCurrentInstance()
+				        .getExternalContext();
+				try {
+					ec.redirect("menuPrincipal.xhtml");
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		} catch (ServiciosException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void preRenderView() {

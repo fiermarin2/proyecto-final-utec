@@ -54,11 +54,13 @@ public class FormulariosBean {
 		f.setUsuario(u);
 		
 		Set<Casilla> casillas = new LinkedHashSet<>();
-		for (CasillaDTO dtoc: dtof.getCasillas()) {
-			Casilla c = beanCasillas.map(dtoc);
-			c.setIdCasilla(dtoc.getId());
-			
-			casillas.add(c);
+		if(dtof.getCasillas() != null) {
+			for (CasillaDTO dtoc: dtof.getCasillas()) {
+				Casilla c = beanCasillas.map(dtoc);
+				c.setIdCasilla(dtoc.getId());
+				
+				casillas.add(c);
+			}
 		}
 		
 		f.setCasillas(casillas);

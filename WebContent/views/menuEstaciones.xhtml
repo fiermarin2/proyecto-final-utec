@@ -16,58 +16,49 @@
 		                    <h5>Lista de estaciones</h5>
 		                </div>
 		                <div class="ibox-content">
-		                    <div class="input-group">
-						        <input type="text" class="form-control" id="filter"  placeholder="Buscar..."/>
-						        <span class="input-group-btn">
-						        	<h:link outcome ="frmEstaciones.xhtml" class="btn btn-success">
-						    			<f:param name="modalidad" value="insert" /><i class="fa fa-plus"></i>Nuevo
-									</h:link>
-		                        </span>
-						    </div>
 						    <form jsf:id="departamentos">
 			                    <div class="table-responsive">
-			                    	<table class="footable table table-stripped">
-		                                <thead>
-		                                    <tr>
-		                                        <th>ID</th>
-		                                        <th data-hide="phone,tablet">Nombre</th>
-		                                        <th data-hide="phone,tablet">Latitud</th>
-		                                        <th data-hide="phone,tablet">Longitud</th>
-		                                        <th data-hide="phone,tablet">Departamento</th>
-		                                        <th class="text-right">Acciones</th>
-		                                    </tr>
-		                                </thead>
-		                                <tbody>
-					                    	<p:repeat value="#{gestionEstaciones.listar()}" var="estacion">
-					                    		<tr> 
-					                    			<td>#{estacion.id}</td>
-					                    			<td>#{estacion.nombre}</td>
-					                    			<td>#{estacion.latitud}</td>
-					                    			<td>#{estacion.longitud}</td>
-					                    			<td>#{estacion.departamento.nombre}</td>
-					                    			<td class="text-right">
-					                    				<p:link outcome="frmEstaciones.xhtml">
-												      		<f:param name="id" value="${estacion.id}"/>
-											    			<f:param name="modalidad" value="update" />
-											                <i class="btn btn-xs btn-default fa fa-edit"></i>
-												         </p:link>
-												         <p:spacer width="2" />
-												         <p:commandLink action="#{gestionEstaciones.eliminarEstacion()}">
-												      		<f:param name="id" value="${estacion.id}"/>
-												      		<i class="btn btn-xs btn-danger fa fa-trash"></i>
-												         </p:commandLink>
-					                    			</td>
-					                    		</tr>
-					                    	</p:repeat>
-				                    		<tfoot>
-		                                        <tr>
-		                                            <td colspan="5">
-		                                                <ul class="pagination pull-left"></ul>
-		                                            </td>
-		                                        </tr>
-		                                    </tfoot>
-		                                </tbody>
-			                    	</table>
+			                    	<p:dataTable var="estacion" widgetVar="dtEstaciones" value="#{gestionEstaciones.listar()}" rowKey="#{estacion.id}" reflow="true" styleClass="products-table">
+				                    	<f:facet name="header">
+							                <div class="input-group">
+							                    <p:inputText id="globalFilter" onkeyup="PF('dtEstaciones').filter()" class="form-control" placeholder="Busqueda global"/>
+							                    <span class="filter-container ui-input-icon-left" > 
+							                       	<h:link outcome ="frmEstaciones.xhtml" class="btn btn-success">
+										    			<f:param name="modalidad" value="insert" /><i class="pi pi-plus"></i> Nuevo
+													</h:link>
+							                    </span>
+							                </div>
+							            </f:facet>
+										<p:column headerText="Nombre" filterBy="#{estacion.nombre}">
+							                <h:outputText value="#{estacion.nombre}"/>
+							            </p:column>
+							            <p:column headerText="Latitud" filterBy="#{estacion.latitud}">
+							                <h:outputText value="#{estacion.latitud}"/>
+							            </p:column>
+							            <p:column headerText="Longitud" filterBy="#{estacion.longitud}">
+							                <h:outputText value="#{estacion.longitud}"/>
+							            </p:column>
+							            <p:column headerText="Departamento" filterBy="#{estacion.departamento.nombre}">
+							                <h:outputText value="#{estacion.departamento.nombre}"/>
+							            </p:column>
+										<p:column headerText="Acciones">
+											<p:link outcome="frmEstaciones.xhtml">
+									      		<f:param name="id" value="${estacion.id}"/>
+								    			<f:param name="modalidad" value="update" />
+								                <i class="btn btn-xs btn-default pi pi-pencil"></i>
+									        </p:link>
+									        <p:spacer width="2" />
+									        <p:commandLink action="#{gestionEstaciones.eliminarEstacion()}">
+									      		<f:param name="id" value="${estacion.id}"/>
+									      		<i class="btn btn-xs btn-danger pi pi-trash"></i>
+									        <p:confirm header="Confirmacion" message="¿Quiere eliminar este registro?" icon="pi pi-info-circle"/>
+									        </p:commandLink>
+								         	<p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
+									            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ui-button-flat"/>
+									            <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" />
+								        	</p:confirmDialog>
+										</p:column>
+									</p:dataTable>
 								</div>
 							</form>
 		            	</div>

@@ -23,7 +23,7 @@
 							                <div class="input-group">
 							                    <p:inputText id="globalFilter" onkeyup="PF('dtFormularios').filter()" class="form-control" placeholder="Busqueda global"/>
 							                    <span class="filter-container ui-input-icon-left" > 
-							                       	<h:link outcome ="frmUser.xhtml" class="btn btn-success">
+							                       	<h:link outcome ="frmFormularios.xhtml" class="btn btn-success">
 										    			<f:param name="modalidad" value="insert" /><i class="pi pi-plus"></i> Nuevo
 													</h:link>
 							                    </span>
@@ -40,12 +40,17 @@
 									      		<f:param name="id" value="${formulario.id}"/>
 								    			<f:param name="modalidad" value="update" />
 								                <i class="btn btn-xs btn-default pi pi-pencil"></i>
-									         </p:link>
-									         <p:spacer width="2" />
-									         <p:commandLink action="#{gestionFormularios.eliminarFormulario()}">
+									        </p:link>
+									        <p:spacer width="2" />
+									        <p:commandLink action="#{gestionFormularios.eliminarFormulario()}">
 									      		<f:param name="id" value="${formulario.id}"/>
 									      		<i class="btn btn-xs btn-danger pi pi-trash"></i>
-									         </p:commandLink>
+									        <p:confirm header="Confirmacion" message="¿Quiere eliminar este registro?" icon="pi pi-info-circle"/>
+									        </p:commandLink>
+								         	<p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
+									            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ui-button-flat"/>
+									            <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" />
+								        	</p:confirmDialog>
 										</p:column>
 									</p:dataTable>
 								</div>

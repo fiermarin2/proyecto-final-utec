@@ -1,5 +1,6 @@
 package com.presentation;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
@@ -7,6 +8,7 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.context.Flash;
 import javax.inject.Inject;
@@ -15,21 +17,22 @@ import javax.servlet.http.HttpSession;
 
 import com.exceptions.ServiciosException;
 import com.services.CasillasBean;
+import com.services.UsuariosBean;
 import com.services.dto.CasillaDTO;
+import com.services.dto.UsuarioDTO;
 
 @Named(value="gestionCasillas")
 @SessionScoped
-public class GestionCasillas implements Serializable{
-	
-	
-private static final long serialVersionUID = 1L;
+public class GestionCasillas implements Serializable{	
+	private static final long serialVersionUID = 1L;
 	
 	@Inject
 	private CasillasBean beanc;
-	
 	private CasillaDTO casilla;
 	private List<CasillaDTO> listaCasillas;
-	
+	@Inject
+	private UsuariosBean userBean;
+	private UsuarioDTO user;
 	private Long id;
 	private String nombre;
 	private String tipo;
@@ -37,14 +40,36 @@ private static final long serialVersionUID = 1L;
 	private String obligatoria;
 	private String unidadMedida;
 	private String descripcion;
-	//completa el casilla un usuario asignado a creacion de casilla.
 	
 	private String modalidad;
+	
 	
 	@PostConstruct
 	public void init(){
 		listaCasillas = listar();
 		casilla = new CasillaDTO();
+		chequeoUsuario();
+	}
+	
+	private void chequeoUsuario() {
+		try {
+			HttpSession ses = ( HttpSession ) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
+			Long userId = (Long) ses.getAttribute("id");
+			
+			user = userBean.buscar(userId);
+		
+			if(user.getTipo().name() == "AFICIONADO") {
+				ExternalContext ec = FacesContext.getCurrentInstance()
+				        .getExternalContext();
+				try {
+					ec.redirect("menuPrincipal.xhtml");
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		} catch (ServiciosException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void preRenderView() {
@@ -63,12 +88,12 @@ private static final long serialVersionUID = 1L;
 				if(obligatoria.equalsIgnoreCase("1"))
 					obligatoria = "OBLIGATORIA";
 				else
-					obligatoria = "NO OBLIGATORIA";
+				obligatoria = "NO OBLIGATORIA";
 				unidadMedida = casilla.getUnidad_de_medida();
 				descripcion = casilla.getDescripcion();
 				
-			} else { //sino vaciamos los campos para crear una casilla nueva.
-				//casilla = new CasillaDTO();
+			} else {
+				casilla = new CasillaDTO();
 				nombre = "";
 				nombre = "";
 				tipo = "";
@@ -164,20 +189,7 @@ private static final long serialVersionUID = 1L;
 			return "";
 		}
 	}
-	
-//	public void onCasillaChange() {
-//
-//        if(tipo !=null && ubicacion != null && obligatoria != null
-//        && !tipo.equals("") && !ubicacion.equals("") && !obligatoria.equals(""))
-//        {
-//            listOfSubDepartment = staffSession.getAllSubDepartments(department);
-//        }
-//        else
-//        {
-//            listOfSubDepartment = new ArrayList<String>();
-//        }
-//    }
-	
+
 	public CasillaDTO getCasilla() {
 		return casilla;
 	}
