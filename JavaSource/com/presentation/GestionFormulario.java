@@ -1,6 +1,8 @@
 package com.presentation;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -26,6 +28,8 @@ public class GestionFormulario implements Serializable{
 	@Inject
 	private FormulariosBean beanf;
 	@Inject
+	private CasillasBean beanc;
+	@Inject
 	private UsuariosBean userBean;
 	@Inject
 	private CasillasBean casillaBean;
@@ -35,6 +39,7 @@ public class GestionFormulario implements Serializable{
 	private String nombre;
 	private String comentario;
 	private String modalidad;
+	private ArrayList<String> casillas;
 	private boolean modoEdicion = false;
 	
 	@PostConstruct
@@ -55,6 +60,7 @@ public class GestionFormulario implements Serializable{
 			}
 			if(id!=null) {
 				formulario = beanf.buscar(id);
+				id = formulario.getId();
 				nombre = formulario.getNombre();
 				comentario = formulario.getComentario();
 			} else {
@@ -63,11 +69,11 @@ public class GestionFormulario implements Serializable{
 				comentario = "";
 			}
 			if (modalidad.contentEquals("update")) {
-				modoEdicion = true;
+				modoEdicion = false;
 			}else if (modalidad.contentEquals("insert")) {
 				modoEdicion = false;
 			}else {
-				modoEdicion = false;
+				modoEdicion = true;
 				modalidad="insert";
 			}
 		} catch (Exception e) {
@@ -87,6 +93,26 @@ public class GestionFormulario implements Serializable{
 		listaFormularios = beanf.obtenerTodos();
 
 		return listaFormularios;
+	}
+	
+	public String agregarCasilla() {
+		try {
+			FormularioDTO formularioNuevo = new FormularioDTO();
+			formularioNuevo = beanf.buscar(id);
+			ArrayList<CasillaDTO> casillasDTO = new ArrayList<>();
+			
+			for (int i = 0; i < casillas.size(); i++) {
+				CasillaDTO cas = beanc.buscar(Long.parseLong(String.valueOf(casillas.get(i))));
+				casillasDTO.add(cas);
+			}
+			formularioNuevo.setCasillas(casillasDTO);
+
+			beanf.mergeFormulario(formularioNuevo);
+			return "menuFormularioCasilla.xhtml?faces-redirect=true";
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 	
 	//agrega usuario
@@ -161,9 +187,11 @@ public class GestionFormulario implements Serializable{
 			
 			FormularioDTO formularioDTO = beanf.buscar(idFormulario);
 			
-			CasillaDTO casillaDTO = casillaBean.buscar(idCasilla);
-			
-			formularioDTO.getCasillas().remove(casillaDTO.getNombre());
+			for (int i = 0; i < formularioDTO.getCasillas().size(); i++) {
+				if(formularioDTO.getCasillas().get(i).getId() == idCasilla) {
+					formularioDTO.getCasillas().remove(i);
+				}
+			}
 			
 			beanf.mergeFormulario(formularioDTO);
 
@@ -219,5 +247,13 @@ public class GestionFormulario implements Serializable{
 
 	public void setModoEdicion(boolean modoEdicion) {
 		this.modoEdicion = modoEdicion;
+	}
+
+	public ArrayList<String> getCasillas() {
+		return casillas;
+	}
+
+	public void setCasillas(ArrayList<String> casillas) {
+		this.casillas = casillas;
 	}
 }

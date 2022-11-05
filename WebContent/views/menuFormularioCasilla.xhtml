@@ -16,52 +16,28 @@
 		                    <h5>Lista de formularios con casillas</h5>
 		                </div>
 		                <div class="ibox-content">
-		                    <div class="input-group">
-						        <input type="text" class="form-control" id="filter"  placeholder="Buscar..."/>
-						        <span class="input-group-btn">
-						            <a class="btn btn-success" href="frmDepartamentos.xhtml">
-						             	<i class="fa fa-plus"></i> Nuevo
-					             	</a>
-		                        </span>
-						    </div>
 						    <form jsf:id="departamentos">
 			                    <div class="table-responsive">
-			                    	<table class="footable table table-stripped">
-		                                <thead>
-		                                    <tr>
-		                                        <th>ID</th>
-		                                        <th data-hide="phone,tablet">Formulario</th>
-		                                        <th data-hide="phone,tablet">Casilla</th>
-		                                        <th class="text-right">Acciones</th>
-		                                    </tr>
-		                                </thead>
-		                                <tbody>
-					                    	<p:repeat value="#{gestionFormularios.listarCasillas()}" var="formulario">
-					                    		<p:repeat value="#{formulario.casillas.keySet()}" var="casilla">
-						                    		<tr>
-						                    			<td>#{formulario.id}</td>
-						                    			<td>#{formulario.nombre}</td>
-						                    			<td>#{formulario.casillas.get(casilla).nombre}</td>
-						                    			<td class="text-right">
-						                    				<p:commandLink action="#{gestionFormularios.eliminarCasilla()}">
-													      		<f:param name="idFormulario" value="${formulario.id}"/>
-													      		<f:param name="idCasilla" value="${formulario.casillas.get(casilla).id}"/>
-													      		<i class="btn btn-xs btn-danger fa fa-trash"></i>
-													         </p:commandLink>
-													         <p:spacer width="2" />
-						                    			</td>
-						                    		</tr>
-					                    		</p:repeat>
-					                    	</p:repeat>
-				                    		<tfoot>
-		                                        <tr>
-		                                            <td colspan="5">
-		                                                <ul class="pagination pull-left"></ul>
-		                                            </td>
-		                                        </tr>
-		                                    </tfoot>
-		                                </tbody>
-			                    	</table>
+			                    	<p:dataTable var="formulario" widgetVar="dtFormularioCasilla" value="#{gestionFormularios.listar()}" rowKey="#{formulario.id}" reflow="true" styleClass="products-table">
+				                    	<f:facet name="header">
+							                <div class="input-group">
+							                    <p:inputText id="globalFilter" onkeyup="PF('dtFormularioCasilla').filter()" class="form-control" placeholder="Busqueda global"/>
+							                    <span class="filter-container ui-input-icon-left" > 
+							                       	<h:link outcome ="frmFormularioCasilla.xhtml" class="btn btn-success">
+										    			<f:param name="modalidad" value="insert" /><i class="pi pi-plus"></i> Nuevo
+													</h:link>
+							                    </span>
+							                </div>
+							            </f:facet>
+							            <p:repeat value="#{formulario.casillas}" var="casilla">
+			                 				<p:column headerText="Formulario" filterBy="#{formulario.nombre}">
+								                <h:outputText value="#{formulario.nombre}"/>
+								            </p:column>
+								            <p:column headerText="Casilla" filterBy="#{casilla.nombre}">
+								                <h:outputText value="#{casilla.nombre}"/>
+								            </p:column>
+							            </p:repeat>
+						            </p:dataTable>
 								</div>
 							</form>
 		            	</div>

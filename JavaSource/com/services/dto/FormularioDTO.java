@@ -1,6 +1,7 @@
 package com.services.dto;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -14,10 +15,17 @@ public class FormularioDTO implements Serializable {
 	//private String metodo_medicion;
 	private String comentario;
 	private UsuarioDTO usuario;
-	private Map<String, CasillaDTO> casillas = new LinkedHashMap<>();
+	private ArrayList<CasillaDTO> casillas;
+	//private Map<String, CasillaDTO> casillas = new LinkedHashMap<>();
 	
 	public Long getId() {
 		return id;
+	}
+	public ArrayList<CasillaDTO> getCasillas() {
+		return casillas;
+	}
+	public void setCasillas(ArrayList<CasillaDTO> casillas) {
+		this.casillas = casillas;
 	}
 	public void setId(Long id) {
 		this.id = id;
@@ -54,12 +62,12 @@ public class FormularioDTO implements Serializable {
 	public void setUsuario(UsuarioDTO usuario) {
 		this.usuario = usuario;
 	}
-	public Map<String, CasillaDTO> getCasillas() {
+	/*public Map<String, CasillaDTO> getCasillas() {
 		return casillas;
 	}
 	public void setCasillas(Map<String, CasillaDTO> casillas) {
 		this.casillas = casillas;
-	}
+	}*/
 	@Override
 	public String toString() {
 		return nombre;

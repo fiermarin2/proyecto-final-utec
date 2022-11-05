@@ -16,54 +16,38 @@
 		                    <h5>Lista de Formularios</h5>
 		                </div>
 		                <div class="ibox-content">
-		                    <div class="input-group">
-						        <input type="text" class="form-control" id="filter"  placeholder="Buscar..."/>
-						        <span class="input-group-btn">
-						        	<h:link outcome ="frmFormularios.xhtml" class="btn btn-success">
-						    			<f:param name="modalidad" value="insert" /><i class="fa fa-plus"></i> Nuevo
-									</h:link>
-		                        </span>
-						    </div>
 						    <form jsf:id="departamentos">
 			                    <div class="table-responsive">
-			                    	<table class="footable table table-stripped">
-		                                <thead>
-		                                    <tr>
-		                                        <th>ID</th>
-		                                        <th data-hide="phone,tablet">Nombre</th>
-		                                        <th data-hide="phone,tablet">Comentarios</th>
-		                                        <th class="text-right">Acciones</th>
-		                                    </tr>
-		                                </thead>
-		                                <tbody>
-					                    	<p:repeat value="#{gestionFormularios.listar()}" var="formulario">
-					                    		<tr> 
-					                    			<td>#{formulario.id}</td>
-					                    			<td>#{formulario.nombre}</td>
-					                    			<td>#{formulario.comentario}</td>
-					                    			<td class="text-right">
-					                    				<p:link outcome="frmFormularios.xhtml">
-												      		<f:param name="id" value="${formulario.id}"/>
-											    			<f:param name="modalidad" value="update" />
-											                <i class="btn btn-xs btn-default fa fa-edit"></i>
-												         </p:link>
-												         <p:spacer width="2" />
-												         <p:commandLink action="#{gestionFormularios.eliminarFormulario()}">
-												      		<f:param name="id" value="${formulario.id}"/>
-												      		<i class="btn btn-xs btn-danger fa fa-trash"></i>
-												         </p:commandLink>
-					                    			</td>
-					                    		</tr>
-					                    	</p:repeat>
-				                    		<tfoot>
-		                                        <tr>
-		                                            <td colspan="5">
-		                                                <ul class="pagination pull-left"></ul>
-		                                            </td>
-		                                        </tr>
-		                                    </tfoot>
-		                                </tbody>
-			                    	</table>
+			                    	<p:dataTable var="formulario" widgetVar="dtFormularios" value="#{gestionFormularios.listar()}" rowKey="#{formulario.id}" reflow="true" styleClass="products-table">
+				                    	<f:facet name="header">
+							                <div class="input-group">
+							                    <p:inputText id="globalFilter" onkeyup="PF('dtFormularios').filter()" class="form-control" placeholder="Busqueda global"/>
+							                    <span class="filter-container ui-input-icon-left" > 
+							                       	<h:link outcome ="frmUser.xhtml" class="btn btn-success">
+										    			<f:param name="modalidad" value="insert" /><i class="pi pi-plus"></i> Nuevo
+													</h:link>
+							                    </span>
+							                </div>
+							            </f:facet>
+										<p:column headerText="Nombre" filterBy="#{formulario.nombre}">
+							                <h:outputText value="#{formulario.nombre}"/>
+							            </p:column>
+							            <p:column headerText="Comentarios" filterBy="#{formulario.comentario}">
+							                <h:outputText value="#{formulario.comentario}"/>
+							            </p:column>
+										<p:column headerText="Acciones">
+											<p:link outcome="frmFormularios.xhtml">
+									      		<f:param name="id" value="${formulario.id}"/>
+								    			<f:param name="modalidad" value="update" />
+								                <i class="btn btn-xs btn-default pi pi-pencil"></i>
+									         </p:link>
+									         <p:spacer width="2" />
+									         <p:commandLink action="#{gestionFormularios.eliminarFormulario()}">
+									      		<f:param name="id" value="${formulario.id}"/>
+									      		<i class="btn btn-xs btn-danger pi pi-trash"></i>
+									         </p:commandLink>
+										</p:column>
+									</p:dataTable>
 								</div>
 							</form>
 		            	</div>

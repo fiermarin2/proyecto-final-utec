@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:composition template="/layout/layout.xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:jsf="http://xmlns.jcp.org/jsf">
+	
+	<ui:define name="content">
+		<div class="wrapper wrapper-content animated fadeInRight">
+		    <div class="row">
+		        <div class="col-lg-12">
+		            <div class="ibox float-e-margins">
+		            	<p:messages id="messages" showDetail="true" closable="true">
+				            <p:autoUpdate/>
+				        </p:messages>
+		                <div class="ibox-title">
+		                    <h5>Lista de Usuarios</h5>
+		                </div>
+		                <div class="ibox-content">
+						    <form jsf:id="idDatosusuario">
+			                    <div class="table-responsive">
+			                    	<p:dataTable var="usuario" widgetVar="dtUsuarios" value="#{gestionUsuarios.listar()}" rowKey="#{usuario.id}" reflow="true" styleClass="products-table">
+				                    	<f:facet name="header">
+							                <div class="input-group">
+							                    <p:inputText id="globalFilter" onkeyup="PF('dtUsuarios').filter()" class="form-control" placeholder="Busqueda global"/>
+							                    <span class="filter-container ui-input-icon-left" > 
+							                       	<h:link outcome ="frmUser.xhtml" class="btn btn-success">
+										    			<f:param name="modalidad" value="insert" /><i class="pi pi-plus"></i> Nuevo
+													</h:link>
+							                    </span>
+							                </div>
+							            </f:facet>
+							            <p:column headerText="Nombre" filterBy="#{usuario.nombre}">
+							                <h:outputText value="#{usuario.nombre}"/>
+							            </p:column>
+							            <p:column headerText="Apellido" filterBy="#{usuario.apellido}">
+							                <h:outputText value="#{usuario.apellido}"/>
+							            </p:column>
+							            <p:column headerText="Correo" filterBy="#{usuario.mail}">
+							                <h:outputText value="#{usuario.mail}"/>
+							            </p:column>
+							            <p:column headerText="Usuario" filterBy="#{usuario.usuario}">
+							                <h:outputText value="#{usuario.usuario}"/>
+							            </p:column>
+							            <p:column headerText="Tipo Usuario" filterBy="#{usuario.tipo}">
+							                <h:outputText value="#{usuario.tipo}"/>
+							            </p:column>
+							            <p:column headerText="Acciones">
+		                    				<p:link outcome="FrmUser.xhtml">
+									      		<f:param name="id" value="${usuario.id}"/>
+									      		<f:param name="tipoUsuario" value="${usuario.tipo}" />
+								    			<f:param name="modalidad" value="update" />
+								                <i class="btn btn-xs btn-default pi pi-pencil"></i>
+									         </p:link>
+									         <p:spacer width="2" />
+									         <p:commandLink action="#{gestionUsuarios.eliminarUsuario()}">
+									      		<f:param name="id" value="${usuario.id}"/>
+									      		<i class="btn btn-xs btn-danger pi pi-trash"></i>
+									         </p:commandLink>
+							            </p:column>
+						            </p:dataTable>
+								</div>
+							</form>
+		            	</div>
+		        	</div>
+		    	</div>
+			</div>
+		</div>
+    </ui:define>
+</ui:composition>

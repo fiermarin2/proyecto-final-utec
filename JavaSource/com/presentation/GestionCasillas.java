@@ -107,12 +107,9 @@ private static final long serialVersionUID = 1L;
 
 			HttpSession ses = ( HttpSession ) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
 			//Long userId = (Long) ses.getAttribute("id");
-<<<<<<< HEAD
-			String userName = (String) ses.getAttribute("username");
 			
-=======
-			String userName = (String) ses.getAttribute("username");		
->>>>>>> a3335872383358a7fc4a38fe17c2e9e01fee9019
+			String userName = (String) ses.getAttribute("username");
+
 			casillaNueva.setNombre(casilla.getNombre());
 			casillaNueva.setDescripcion(casilla.getDescripcion());
 			casillaNueva.setTipo(casilla.getUbicacion());
@@ -166,10 +163,6 @@ private static final long serialVersionUID = 1L;
 			e.printStackTrace();
 			return "";
 		}
-<<<<<<< HEAD
-=======
-	
->>>>>>> a3335872383358a7fc4a38fe17c2e9e01fee9019
 	}
 	
 //	public void onCasillaChange() {
@@ -247,6 +240,5 @@ private static final long serialVersionUID = 1L;
 
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
-	}
-	
+	}	
 }

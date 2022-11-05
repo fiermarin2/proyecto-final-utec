@@ -32,7 +32,6 @@ public class RegistrosBean {
 	private UsuariosBean beanUsuarios;
 	@EJB
 	private EstacionesBean beanEstaciones;
-
 	@EJB
 	private RegistroDAO daor;
 	@EJB
@@ -106,9 +105,6 @@ public class RegistrosBean {
 
 	public List<RegistroDTO> obtenerTodos(UsuarioDTO udto) {
 		try {
-			/*
-			 * SE TRAE LA LISTA, SEGÚN EL TIPO DE USUARIO
-			 */
 			List<Registro> lista = (udto instanceof AficionadoDTO) ? 
 					daor.findByUserId(udto.getId()) 
 					: daor.findAll();
@@ -123,7 +119,7 @@ public class RegistrosBean {
 			return null;
 		}
 	}
-
+	
 	public List<RegistroDTO> obtenerPorFormulario(Long idFormulario) {
 		try {
 			List<RegistroDTO> lista = new ArrayList<>();

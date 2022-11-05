@@ -31,22 +31,16 @@ public class GestionUsuarios implements Serializable{
 	private UsuariosBean beanu;
 	@Inject
 	private CiudadesBean beanc;
-
 	private List<UsuarioDTO> listaUsuarios;
-
 	private UsuarioDTO usuario;
-	
 	private String contrasena;
-	
 	private Long id;
 	private String modalidad;
 	private String tipoUsuario;
 	private boolean showOrHide;
-
 	private String documento;
 	private String domicilio;
 	private String telefono;
-	///hacer magia para buscar ciudad por nombre.
 	private String departamento;
 	private String ciudad;
 	private String ocupacion;
@@ -55,13 +49,10 @@ public class GestionUsuarios implements Serializable{
 	
 	public boolean showOrHide() {
 		try {
-			if(tipoUsuario.equalsIgnoreCase("ADMINISTRADOR")) {
-				return true;
-			}else if(tipoUsuario.equalsIgnoreCase("INVESTIGADOR")) {
-					return true;
-			}else {
+			if(tipoUsuario.equalsIgnoreCase("AFICIONADO")) {
 				return false;
 			}
+			return true;
 		} catch (Exception e) {
 			return false;
 		}
@@ -107,11 +98,11 @@ public class GestionUsuarios implements Serializable{
 				contrasena = "";
 			}
 			if (modalidad.contentEquals("update")) {
-				modoEdicion = true;
+				modoEdicion = false;
 			}else if (modalidad.contentEquals("insert")) {
 				modoEdicion = false;
 			}else {
-				modoEdicion = false;
+				modoEdicion = true;
 				modalidad="insert";
 			}
 		} catch (Exception e) {

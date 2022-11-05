@@ -54,7 +54,7 @@ public class FormulariosBean {
 		f.setUsuario(u);
 		
 		Set<Casilla> casillas = new LinkedHashSet<>();
-		for (CasillaDTO dtoc: dtof.getCasillas().values()) {
+		for (CasillaDTO dtoc: dtof.getCasillas()) {
 			Casilla c = beanCasillas.map(dtoc);
 			c.setIdCasilla(dtoc.getId());
 			
@@ -85,10 +85,11 @@ public class FormulariosBean {
 			
 			dto.setUsuario(beanUsuarios.mapeo(frm.getUsuario()));
 			
-			Map<String, CasillaDTO> casillas = new LinkedHashMap<>();
+			//Map<String, CasillaDTO> casillas = new LinkedHashMap<>();
+			ArrayList<CasillaDTO> casillas = new ArrayList<>();
 			for (Casilla c: frm.getCasillas()) {
 				CasillaDTO dtoc = beanCasillas.mapInverso(c);
-				casillas.put(dtoc.getNombre(),dtoc);
+				casillas.add(dtoc);
 			}
 			dto.setCasillas(casillas);
 			

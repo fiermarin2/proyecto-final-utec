@@ -14,7 +14,7 @@
 	                <div class="ibox float-e-margins">
 	                    <div class="ibox-title"><h:head></h:head>
 	                        <h5>
-	                            <i class="fa fa-edit"></i> Usuario / Editar/Crear
+	                            <i class="fa fa-edit"></i> Usuario
 	                        </h5>
 	                        <div class="ibox-tools">
 	                            <a class="collapse-link">
@@ -26,8 +26,6 @@
 	                    <div class="ibox-content">
 							<f:metadata>
 							    <f:viewParam name="id" value="#{gestionUsuarios.id}" /> 
-							    <f:viewParam name="tipoUsuario" value="#{gestionUsuarios.tipoUsuario}" /> 
-					    		<f:event type="preRenderView" listener="#{gestionUsuarios.preRenderView}"/>
 							</f:metadata>
 										
 							<form jsf:id="usuario" class="form-horizontal">
@@ -180,7 +178,7 @@
 			
                                 <div class="form-group">
                                     <div class="col-sm-4 col-sm-offset-2">
-                                        <a class="btn btn-white" href="menuPrincipal.xhtml"> Cancelar</a>
+                                        <a class="btn btn-white" href="menuUsuarios.xhtml"> Cancelar</a>
                                         <h:commandButton value="Guardar" rendered="#{!gestionUsuarios.modoEdicion}" 
 											update=":form" action="#{gestionUsuarios.insertUsuario()}" class="btn btn-primary">
 										    	<f:param name="id" value="${gestionEmpleado.id}" />
