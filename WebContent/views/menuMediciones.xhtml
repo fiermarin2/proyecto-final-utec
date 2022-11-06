@@ -12,10 +12,13 @@
 		    <div class="row">
 		        <div class="col-lg-12">
 		            <div class="ibox float-e-margins">
+		            	<div class="ibox-title">
+		                    <h5>Lista de mediciones</h5>
+		                </div>
 		                <div class="ibox-content">	                    
 						    <form jsf:id="departamentos">
 			                    <div class="table-responsive">
-			                    	<p:dataTable var="medicion" widgetVar="dtMediciones" value="#{gestionMediciones.listaMediciones}" rowKey="#{medicion.id}" reflow="true" styleClass="products-table">
+			                    	<p:dataTable var="medicion" widgetVar="dtMediciones" value="#{gestionMediciones.listar()}" rowKey="#{medicion.id}" reflow="true" styleClass="products-table">
 				                    	<f:facet name="header">
 							                <div class="input-group">
 							                    <p:inputText id="globalFilter" onkeyup="PF('dtMediciones').filter()" class="form-control" placeholder="Busqueda global"/>
@@ -41,6 +44,23 @@
 							            <p:column headerText="Estacion" filterBy="#{medicion.estacion.nombre}">
 							                <h:outputText value="#{medicion.estacion.nombre}"/>
 							            </p:column>
+							            <p:column headerText="Acciones">
+											<p:link outcome="frmMediciones.xhtml">
+									      		<f:param name="id" value="${medicion.id}"/>
+								    			<f:param name="modalidad" value="update" />
+								                <i class="btn btn-xs btn-default pi pi-pencil"></i>
+									        </p:link>
+									        <p:spacer width="2" />
+									        <p:commandLink action="#{gestionMediciones.eliminarMedicion}">
+									      		<f:param name="id" value="${medicion.id}"/>
+									      		<i class="btn btn-xs btn-danger pi pi-trash"></i>
+									        <p:confirm header="Confirmacion" message="¿Quiere eliminar este registro?" icon="pi pi-info-circle"/>
+									        </p:commandLink>
+								         	<p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
+									            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ui-button-flat"/>
+									            <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" />
+								        	</p:confirmDialog>
+										</p:column>
 							            <p:rowExpansion>
 							            	<div class="card">
 								            	<p:dataTable var="valor" value="#{medicion.valor.entrySet().toArray()}">

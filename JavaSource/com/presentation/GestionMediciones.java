@@ -8,7 +8,9 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.context.Flash;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -56,8 +58,8 @@ public class GestionMediciones implements Serializable{
 		formulario = new FormularioDTO();
 		casillas = new ArrayList<>();
 	}
-
-	private List<RegistroDTO> listar() {
+	
+	public List<RegistroDTO> listar() {
 		try {
 			HttpSession ses = ( HttpSession ) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
 			Long userId = (Long) ses.getAttribute("id");
@@ -103,11 +105,32 @@ public class GestionMediciones implements Serializable{
 			newRegistro.setValor(valores);
 			
 			registroBean.crear(newRegistro);
-			
-			return "menuFormularios.xhtml?faces-redirect=true";
+
+			return "menuMediciones.xhtml?faces-redirect=true";
 		}catch(Exception e) {
 			e.getLocalizedMessage();
 			return null;
+		}
+	}
+	
+	public String eliminarMedicion() {
+		try {
+			FacesContext fc = FacesContext.getCurrentInstance();
+			Map<String,String> params = 
+	        fc.getExternalContext().getRequestParameterMap();
+			id = Long.parseLong(params.get("id")); 
+			
+			registroBean.borrarMedicion(id.longValue());
+			
+			Flash flash = fc.getExternalContext().getFlash();
+			flash.setKeepMessages(true);
+			FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se ha eliminado la medicion", "");
+			FacesContext.getCurrentInstance().addMessage(null, facesMsg);
+
+			return "menuMediciones.xhtml?faces-redirect=true";
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "";
 		}
 	}
 	
@@ -135,12 +158,18 @@ public class GestionMediciones implements Serializable{
 		this.form = form;
 	}
 
-	
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 	public Long getEstacionID() {
 		return estacionID;
 	}
 	
-
 	public void setEstacionID(Long estacionID) {
 		this.estacionID = estacionID;
 	}

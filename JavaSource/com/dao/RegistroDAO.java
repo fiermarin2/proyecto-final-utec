@@ -9,6 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
+import com.entities.Formulario;
 import com.entities.Registro;
 import com.entities.Usuario;
 import com.exceptions.ServiciosException;
@@ -40,6 +41,14 @@ public class RegistroDAO {
 		}
     }
     
+    public void remove(Long id) throws ServiciosException{
+    	try {
+			Registro reg = em.find(Registro.class, id);
+			em.remove(reg);
+		} catch (Exception e) {
+			throw new ServiciosException("Error eliminar medicion");
+		}
+    }
        
 	public Registro merge(Registro form) throws ServiciosException{
     	try {

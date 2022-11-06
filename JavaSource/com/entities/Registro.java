@@ -54,12 +54,6 @@ public class Registro implements Serializable {
 	@JoinColumn(name="ID_FORMULARIO", nullable=false)
 	private Formulario formulario;
 	
-	/*
-	//bi-directional many-to-one association to Casilla
-	@ManyToOne
-	@JoinColumn(name="ID_CASILLA", nullable=false)
-	private Casilla casilla;
-	*/
 	
 	//bi-directional many-to-one association to Estacion
 	@ManyToOne

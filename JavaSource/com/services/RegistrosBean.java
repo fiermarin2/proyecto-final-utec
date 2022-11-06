@@ -103,6 +103,14 @@ public class RegistrosBean {
 		}
 	}
 
+	public void borrarMedicion(Long id) throws ServiciosException {
+		try {
+			daor.remove(id);
+		} catch (Exception e) {
+			throw new ServiciosException("error eliminar medicion");
+		}
+	}
+	
 	public List<RegistroDTO> obtenerTodos(UsuarioDTO udto) {
 		try {
 			List<Registro> lista = (udto instanceof AficionadoDTO) ? 
