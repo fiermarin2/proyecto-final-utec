@@ -61,8 +61,6 @@
 							   				<f:selectItem itemValue="DOUBLE" itemLabel="NUMERO DECIMAL" />
 							   				<f:selectItem itemValue="BOOLEAN" itemLabel="V o F" />
 							   				<f:selectItem itemValue="STRING" itemLabel="CARACTERES" />
-<!-- 							   				<p:ajax process="tipo"  -->
-<!-- 					                        update="@form" /> -->
 										</p:selectOneMenu>
 										<p:message for="tipo" style="color:red" />
 									</div>
@@ -91,10 +89,8 @@
 									<div class="col-sm-6">
 										<p:selectOneMenu id="obligatoria" disabled="false" value="#{gestionCasillas.casilla.obligatoria}">
 							   				<f:selectItem itemLabel="[Seleccione]" itemValue="0" itemDisabled="false" noSelectionOption="true"/>
-							   				<f:selectItem itemValue= "1" itemLabel="OBLIGATORIA"  />
-							   				<f:selectItem itemValue= "0" itemLabel="NO OBLIGATORIA" />
-<!-- 							   				<p:ajax process="obligatoria"  -->
-<!-- 					                        update="@form" /> -->
+							   				<f:selectItem itemValue= "true" itemLabel="OBLIGATORIA"  />
+							   				<f:selectItem itemValue= "false" itemLabel="NO OBLIGATORIA" />
 										</p:selectOneMenu>
 										<p:message for="obligatoria" style="color:red" />
 									</div>

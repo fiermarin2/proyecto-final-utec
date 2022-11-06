@@ -131,20 +131,15 @@ public class GestionCasillas implements Serializable{
 			CasillaDTO casillaNueva = new CasillaDTO();
 
 			HttpSession ses = ( HttpSession ) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
-			//Long userId = (Long) ses.getAttribute("id");
 			
 			String userName = (String) ses.getAttribute("username");
 
 			casillaNueva.setNombre(casilla.getNombre());
 			casillaNueva.setDescripcion(casilla.getDescripcion());
-			casillaNueva.setTipo(casilla.getUbicacion());
+			casillaNueva.setTipo(casilla.getTipo());
 			casillaNueva.setUbicacion(casilla.getUbicacion());
 			casillaNueva.setUnidad_de_medida(casilla.getUnidad_de_medida());
-			
-			if(obligatoria.equalsIgnoreCase("1"))
-				casillaNueva.setObligatoria(true);
-			else
-				casillaNueva.setObligatoria(false);
+			casillaNueva.setObligatoria(casilla.getObligatoria());
 			
 			casillaNueva.setUsuario(userName);
 			
