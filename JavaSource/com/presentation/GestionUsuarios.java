@@ -202,7 +202,7 @@ public class GestionUsuarios implements Serializable{
 				FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se ha agregado un nuevo Usuario de tipo " + usuarioNuevo.getTipo().toString(), "");
 				FacesContext.getCurrentInstance().addMessage(null, facesMsg);
 				
-				return "menuPrincipal";
+				return "menuUsuarios";
 			} else {
 				usuarioNuevo.setId(usuario.getId());
 				this.modalidad="update";
@@ -211,7 +211,7 @@ public class GestionUsuarios implements Serializable{
 				FacesContext.getCurrentInstance().addMessage(null, facesMsg);
 				
 				beanu.modificar(usuarioNuevo);
-				return "menuPrincipal";
+				return "menuUsuarios";
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
