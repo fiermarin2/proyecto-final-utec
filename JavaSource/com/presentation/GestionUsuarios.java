@@ -211,7 +211,7 @@ public class GestionUsuarios implements Serializable{
 				FacesContext.getCurrentInstance().addMessage(null, facesMsg);
 				
 				beanu.modificar(usuarioNuevo);
-				return "menuPrincipal";
+				return "menuUsuarios";
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -236,7 +236,7 @@ public class GestionUsuarios implements Serializable{
 			listaUsuarios = beanu.encontrarTodos();
 
 			//return "menuPrincipal.xhtml";
-			return "menuPrincipal.xhtml?faces-redirect=true";
+			return "menuUsuarios.xhtml?faces-redirect=true";
 			//FacesContext.getCurrentInstance().getExternalContext().redirect("/Grupo10_Semana4/views/menuPrincipal.xhtml");
 		} catch (Exception e) {
 			e.printStackTrace();

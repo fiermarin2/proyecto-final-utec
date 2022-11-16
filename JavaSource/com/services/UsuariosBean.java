@@ -7,10 +7,16 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.persistence.PersistenceException;
+import javax.websocket.server.PathParam;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 
 import com.dao.UsuarioDAO;
 import com.entities.Administrador;
@@ -37,7 +43,8 @@ public class UsuariosBean implements Serializable {
 	private UsuarioDAO usuarioDAO;
 	@EJB
 	private CiudadesBean ciudadesBean;
-
+	@Inject
+	private UsuariosBean beanu;
 	public UsuariosBean() {
 
 	}
@@ -84,6 +91,26 @@ public class UsuariosBean implements Serializable {
 		}
 	}
 
+	//@Consumes(MediaType.APPLICATION_JSON)
+	@POST
+	@Path("login")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response loginRest(UsuarioDTO credenciales) {
+		
+		try {
+			UsuarioDTO usuario = new UsuarioDTO();
+			usuario = beanu.mapeo(usuarioDAO.obtenerLogIn(credenciales.getUsuario(), credenciales.getContrasena()));
+			usuario.setContrasena(null);
+
+			return Response.ok(usuario).build();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return Response.status(Status.NETWORK_AUTHENTICATION_REQUIRED).entity("No autorizado").build();
+		}
+
+	}
+	
 	@GET
 	@Path("listarUsuarios")
 	@Produces("application/json")

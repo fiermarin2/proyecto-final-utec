@@ -15,6 +15,9 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 
 import com.entities.Casilla;
 import com.exceptions.ServiciosException;
@@ -26,9 +29,9 @@ import com.services.UsuariosBean;
 import com.services.dto.CasillaDTO;
 import com.services.dto.FormularioDTO;
 import com.services.dto.RegistroDTO;
-
 import org.primefaces.event.SelectEvent;
 
+@Path("mediciones")
 @Named(value="gestionMediciones")
 @SessionScoped
 public class GestionMediciones implements Serializable{
@@ -59,6 +62,9 @@ public class GestionMediciones implements Serializable{
 		casillas = new ArrayList<>();
 	}
 	
+	@GET
+	@Path("listarMediciones")
+	@Produces("application/json")
 	public List<RegistroDTO> listar() {
 		try {
 			HttpSession ses = ( HttpSession ) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
@@ -66,7 +72,9 @@ public class GestionMediciones implements Serializable{
 		
 			listaMediciones = registroBean.obtenerTodos(userBean.buscar(userId));
 		} catch (ServiciosException e) {
+			
 			e.printStackTrace();
+			return null;
 		}
 
 		return listaMediciones;

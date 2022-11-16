@@ -4,7 +4,6 @@ package com.presentation;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.Hashtable;
-
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.ExternalContext;
@@ -19,16 +18,11 @@ import javax.naming.directory.InitialDirContext;
 import javax.naming.directory.SearchControls;
 import javax.naming.directory.SearchResult;
 import javax.servlet.http.HttpSession;
-
 import com.dao.UsuarioDAO;
 import com.entities.TipoUsuario;
 import com.exceptions.ServiciosException;
-import com.services.CiudadesBean;
-import com.services.DepartamentosBean;
 import com.services.UsuariosBean;
 import com.services.dto.AdministradorDTO;
-import com.services.dto.CiudadDTO;
-import com.services.dto.DepartamentoDTO;
 import com.services.dto.UsuarioDTO;
 
 /**
@@ -48,10 +42,6 @@ public class LoginBean implements Serializable {
 	@Inject
 	private UsuariosBean beanu;
 	private static UsuarioDTO usuario;
-	@Inject
-	private DepartamentosBean beand;
-	@Inject
-	private CiudadesBean beanc;
 	private String usr = "";
 	private String pwd = "";
 	static DirContext ldapContext;
@@ -81,12 +71,10 @@ public class LoginBean implements Serializable {
 				usuario.setNombre("Grupo 100");
 				beanu.modificar(usuario);
 			}
-			
 		} catch (ServiciosException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 	}
 
 	public String checkLogIn() throws ServiciosException, IOException {
