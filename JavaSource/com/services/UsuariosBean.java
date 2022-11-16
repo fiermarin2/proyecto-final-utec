@@ -52,7 +52,7 @@ public class UsuariosBean implements Serializable {
 
 			return udto;
 		} catch (PersistenceException e) {
-			throw new ServiciosException("No se pudo crear el aficionado");
+			throw new ServiciosException("No se pudo crear el usuario");
 		}
 	}
 	
