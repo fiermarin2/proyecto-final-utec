@@ -31,7 +31,6 @@ import com.services.dto.FormularioDTO;
 import com.services.dto.RegistroDTO;
 import org.primefaces.event.SelectEvent;
 
-@Path("mediciones")
 @Named(value="gestionMediciones")
 @SessionScoped
 public class GestionMediciones implements Serializable{
@@ -62,9 +61,6 @@ public class GestionMediciones implements Serializable{
 		casillas = new ArrayList<>();
 	}
 	
-	@GET
-	@Path("listarMediciones")
-	@Produces("application/json")
 	public List<RegistroDTO> listar() {
 		try {
 			HttpSession ses = ( HttpSession ) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
