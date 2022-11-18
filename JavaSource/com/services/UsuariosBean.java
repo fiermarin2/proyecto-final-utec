@@ -2,12 +2,25 @@ package com.services;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.naming.AuthenticationException;
+import javax.naming.CommunicationException;
+import javax.naming.Context;
+import javax.naming.NamingEnumeration;
+import javax.naming.NamingException;
+import javax.naming.NoInitialContextException;
+import javax.naming.PartialResultException;
+import javax.naming.directory.Attributes;
+import javax.naming.directory.DirContext;
+import javax.naming.directory.InitialDirContext;
+import javax.naming.directory.SearchControls;
+import javax.naming.directory.SearchResult;
 import javax.persistence.PersistenceException;
 import javax.websocket.server.PathParam;
 import javax.ws.rs.GET;
@@ -59,7 +72,7 @@ public class UsuariosBean implements Serializable {
 
 			return udto;
 		} catch (PersistenceException e) {
-			throw new ServiciosException("No se pudo crear el aficionado");
+			throw new ServiciosException("No se pudo crear el usuario");
 		}
 	}
 	
@@ -260,5 +273,80 @@ public class UsuariosBean implements Serializable {
 	
 	public void delete(long idUsuario) throws ServiciosException {
 		usuarioDAO.delete(idUsuario);	
+	}
+	
+	public UsuarioDTO usuarioLDAP(String usuarioLDAP, String contrasena) {
+
+		UsuarioDTO usuario = new UsuarioDTO();
+
+		try {
+			String context = "com.sun.jndi.ldap.LdapCtxFactory";
+			String provider = "ldap://hq.utec.uy:389";
+			String returnedAtts[]={"givenName","sn","userPrincipalName", "samAccountName", "memberOf","info"};
+			String searchBase = "dc=hq,dc=utec,dc=uy";
+			String searchFilter = "(&(objectClass=user)"
+					+ "(memberOf:1.2.840.113556.1.4.1941:=CN=GS_iAGRO-App,OU=Data Center,DC=hq,DC=utec,DC=uy)"
+					+ "(sAMAccountName="+usuarioLDAP.split("\\\\")[1]+")"
+					+ "(|(memberOf=CN=GS_Investigadores_iAGRO,OU=Data Center,DC=hq,DC=utec,DC=uy)"
+					+ "(memberOf=CN=GS_Administradores_iAGRO,OU=Data Center,DC=hq,DC=utec,DC=uy)))";
+			SearchControls searchCtls = new SearchControls();
+
+			Hashtable<String, String> ldapEnv = new Hashtable<String, String>();
+			ldapEnv.put(Context.INITIAL_CONTEXT_FACTORY, context);
+			ldapEnv.put(Context.PROVIDER_URL, provider);
+			ldapEnv.put(Context.SECURITY_PRINCIPAL, usuarioLDAP);
+			ldapEnv.put(Context.SECURITY_CREDENTIALS, contrasena);
+
+			DirContext ldapContext = new InitialDirContext(ldapEnv);     
+
+			searchCtls.setReturningAttributes(returnedAtts);
+			searchCtls.setSearchScope(SearchControls.SUBTREE_SCOPE);
+
+			NamingEnumeration<SearchResult> answer = ldapContext.search(searchBase, searchFilter, searchCtls);
+
+			Attributes attrs = (Attributes)answer.next().getAttributes();
+
+			ldapContext.close();
+
+			usuario = (attrs.get("memberOf").toString().contains("Administradores"))?
+					new AdministradorDTO().setDocumento(Integer.parseInt((String) attrs.get("info").get(0)))
+					:
+					new InvestigadorDTO().setDocumento(Integer.parseInt((String) attrs.get("info").get(0)));
+			
+			usuario.setNombre((String) attrs.get("givenName").get(0));
+			usuario.setApellido((String) attrs.get("sn").get(0));
+			usuario.setMail((String)  attrs.get("userPrincipalName").get(0));
+			usuario.setContrasena(contrasena.toCharArray());
+			usuario.setUsuario(usuarioLDAP);
+
+			if (!buscarUserName(usuario.getUsuario())) {
+				crear(usuario);
+			}
+			else {
+				usuario.setId(buscar(usuarioLDAP).getId());
+				modificar(usuario);
+			}
+
+		}catch(AuthenticationException e) {
+			System.out.println("Error de usuario o contraseña");
+
+		}catch(CommunicationException c) {
+			System.out.println("Problemas de conexión con el servidor");
+
+		}catch(NoInitialContextException i) {
+			System.out.println("error de integración LDAP");
+
+		}catch(PartialResultException p) {
+			System.out.println("no encuentro un atributo o usuario");
+
+		} catch (NamingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+
+		} catch (ServiciosException e) {
+			System.out.println("Ërror al crear o actualizar el usuario");
+		}
+		return usuario;
+
 	}
 }

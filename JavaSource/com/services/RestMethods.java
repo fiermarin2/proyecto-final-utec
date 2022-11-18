@@ -1,5 +1,6 @@
 package com.services;
 
+import java.io.CharArrayReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,9 +53,16 @@ public class RestMethods {
 	@Path("login")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response loginRest(UsuarioDTO credenciales) {
+
+		String usr=credenciales.getUsuario().toLowerCase();
+		char[] pwd=credenciales.getContrasena();
+		
 		try {
+			
+			if (usr.contains("\\")) userBean.usuarioLDAP(usr, pwd.toString());
+			
 			UsuarioDTO usuario = new UsuarioDTO();
-			usuario = userBean.mapeo(usuarioDAO.obtenerLogIn(credenciales.getUsuario(), credenciales.getContrasena()));
+			usuario = userBean.mapeo(usuarioDAO.obtenerLogIn(usr, pwd));
 			usuario.setContrasena(null);
 
 			return Response.ok(usuario).build();
