@@ -6,8 +6,10 @@ import java.util.List;
 
 import javax.ejb.EJB;
 import javax.inject.Inject;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -23,7 +25,7 @@ import com.services.dto.FormularioDTO;
 import com.services.dto.RegistroDTO;
 import com.services.dto.UsuarioDTO;
 
-@Path("methods")
+@Path("")
 public class RestMethods {
 	
 	@EJB
@@ -36,6 +38,8 @@ public class RestMethods {
 	private FormulariosBean formBean;
 	@Inject
 	private EstacionesBean estacionesBean;
+	@Inject
+	private RegistrosBean regBean;
 	
 	@GET
 	@Path("listarUsuarios")
@@ -140,6 +144,52 @@ public class RestMethods {
 		try {
 			form = formBean.obtenerFormulario(formNombre);
 			return form;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	@POST
+	@Path("registrarMedicion")
+	@Produces(MediaType.APPLICATION_JSON)
+	public RegistroDTO registrarMedicion(RegistroDTO dto) {
+		try {
+			return regBean.crear(dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	@DELETE
+	@Path("borrarMedicion/{idMedicion}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public void borrarMedicion(@PathParam(value = "idMedicion") Long id) {
+		try {
+			regBean.borrarMedicion(id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@PUT
+	@Path("editarMedicion")
+	@Produces(MediaType.APPLICATION_JSON)
+	public void editarMedicion(RegistroDTO dto) {
+		try {
+			regBean.merge(dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	//obtenerPorFormulario
+	@GET
+	@Path("medicionesPorFormulario/{idForm}")
+	@Produces("application/json")
+	public List<RegistroDTO> medicionesPorFormulario(@PathParam(value = "idForm") Long idForm) {
+		try {
+			return regBean.obtenerPorFormulario(idForm);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;

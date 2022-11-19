@@ -220,13 +220,19 @@ public class UsuariosBean implements Serializable {
 
 			((Aficionado) usuario).setOcupacion(((AficionadoDTO) udto).getOcupacion());
 		}
-
+		if(usuario == null) {
+			usuario = new Administrador();
+		}
+		
 		usuario.setApellido(udto.getApellido());
 		usuario.setNombre(udto.getNombre());
 		usuario.setMail(udto.getMail());
 		usuario.setNombreUsuario(udto.getUsuario());
-		if(udto.getContrasena().length != 0)
-		usuario.setContrasena(udto.getContrasena());
+		if(udto.getContrasena() != null) {
+			if(udto.getContrasena().length != 0) {
+				usuario.setContrasena(udto.getContrasena());
+			}
+		}
 		usuario.setTipo(udto.getTipo());
 
 		return usuario;
