@@ -85,7 +85,6 @@ public class LoginBean implements Serializable {
 	}
 
 	public String checkLogIn() throws ServiciosException, IOException {
-		
 		usr = usr.toLowerCase();
 		
 		if (usr.contains("\\")) beanu.usuarioLDAP(usr, pwd);

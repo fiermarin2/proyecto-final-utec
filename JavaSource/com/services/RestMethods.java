@@ -185,11 +185,12 @@ public class RestMethods {
 	}
 	//obtenerPorFormulario
 	@GET
-	@Path("medicionesPorFormulario/{idForm}")
+	@Path("medicionesPorFormulario/{nombreFormulario}")
 	@Produces("application/json")
-	public List<RegistroDTO> medicionesPorFormulario(@PathParam(value = "idForm") Long idForm) {
+	public List<RegistroDTO> medicionesPorFormulario(@PathParam(value = "nombreFormulario") String nombreFormulario) {
 		try {
-			return regBean.obtenerPorFormulario(idForm);
+			FormularioDTO form = formBean.obtenerFormulario(nombreFormulario);
+			return regBean.obtenerPorFormulario(form.getId());
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
