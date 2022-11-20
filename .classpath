@@ -18,6 +18,6 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/primefaces-11.0.0.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/primefaces-11.0.0.jar" sourcepath="C:/Users/Matia/.m2/repository/org/primefaces/primefaces/11.0.0/primefaces-11.0.0-sources.jar"/>
 	<classpathentry kind="output" path="WebContent/WEB-INF/classes"/>
 </classpath>

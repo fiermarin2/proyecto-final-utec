@@ -22,6 +22,7 @@
 				                    	<f:facet name="header">
 							                <div class="input-group">
 							                    <p:inputText id="globalFilter" onkeyup="PF('dtMediciones').filter()" class="form-control" placeholder="Busqueda global"/>
+							                    
 							                    <span class="filter-container ui-input-icon-left" > 
 							                       	<h:link outcome ="frmMediciones.xhtml" class="btn btn-success">
 										    			<f:param name="modalidad" value="insert" /><i class="pi pi-plus"></i> Nuevo
@@ -63,7 +64,19 @@
 										</p:column>
 							            <p:rowExpansion>
 							            	<div class="card">
-								            	<p:dataTable var="valor" value="#{medicion.valor.entrySet().toArray()}">
+							            		<p:commandButton value="XLS" styleClass="mr-2 mb-2">
+								                    <p:dataExporter type="xls" target="tbl2" fileName="mediciones" exporter="#{dataExporterView.prueba()}"/>
+								                </p:commandButton>
+								            	<p:dataTable var="valor" id="tbl2" value="#{medicion.valor.entrySet().toArray()}">
+								            		<p:column headerText="Formulario" visible="false">
+								            			<h:outputText value="#{medicion.formulario.nombre}"/>
+								            		</p:column>
+								            		<p:column headerText="Fecha" visible="false">
+								            			<h:outputText value="#{medicion.fecha_Hora}"/>
+								            		</p:column>
+								            		<p:column headerText="Estacion" visible="false">
+								            			<h:outputText value="#{medicion.estacion.nombre}"/>
+								            		</p:column>
 								            		<p:column headerText="Casilla">
 										                <h:outputText value="#{valor.key}"/>
 										            </p:column>

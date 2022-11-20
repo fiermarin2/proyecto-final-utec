@@ -99,15 +99,7 @@ public class Registro implements Serializable {
 	public void setFormulario(Formulario formulario) {
 		this.formulario = formulario;
 	}
-/*
-	public Casilla getCasilla() {
-		return casilla;
-	}
 
-	public void setCasilla(Casilla casilla) {
-		this.casilla = casilla;
-	}
-*/
 	public Estacion getEstacion() {
 		return estacion;
 	}

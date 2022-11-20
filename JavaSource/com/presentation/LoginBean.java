@@ -87,6 +87,7 @@ public class LoginBean implements Serializable {
 	}
 
 	public String checkLogIn() throws ServiciosException, IOException {
+<<<<<<< HEAD
 		
 		try {
 			usr = usr.toLowerCase();
@@ -95,6 +96,13 @@ public class LoginBean implements Serializable {
 				beanu.usuarioLDAP(usr, pwd);
 			else
 				usuario = beanu.mapeo(daou.obtenerLogIn(usr, pwd.toCharArray()));
+=======
+		usr = usr.toLowerCase();
+		
+		if (usr.contains("\\")) beanu.usuarioLDAP(usr, pwd);
+		
+		usuario = beanu.mapeo(daou.obtenerLogIn(usr, pwd.toCharArray()));
+>>>>>>> refs/remotes/origin/master
 
 
 			if (usuario != null) {
