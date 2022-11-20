@@ -15,10 +15,14 @@
 		            	<div class="ibox-title">
 		                    <h5>Lista de mediciones</h5>
 		                </div>
-		                <div class="ibox-content">	                    
+		                <div class="ibox-content">	 
+		                
 						    <form jsf:id="departamentos">
 			                    <div class="table-responsive">
+
 			                    	<p:dataTable var="medicion" widgetVar="dtMediciones" value="#{gestionMediciones.listar()}" rowKey="#{medicion.id}" reflow="true" styleClass="products-table">
+				                    				                    
+				                    
 				                    	<f:facet name="header">
 							                <div class="input-group">
 							                    <p:inputText id="globalFilter" onkeyup="PF('dtMediciones').filter()" class="form-control" placeholder="Busqueda global"/>
@@ -29,7 +33,17 @@
 													</h:link>
 							                    </span>
 							                </div>
+							                <br/>
+							               <div class="input-group"> 
+												<h:commandButton id="visibleBrowseButton" value="IMPORTAR" onclick="uploadFile.click()" immediate="true" class="btn btn-success">
+												
+												</h:commandButton>
+							                	<input type="file" id="uploadFile" style="display: none;" size="50" />
+							               </div>
 							            </f:facet>
+
+							            
+							            
 			                    		<p:column style="width:2rem">
 							                <p:rowToggler/>
 							            </p:column>
@@ -65,7 +79,7 @@
 							            <p:rowExpansion>
 							            	<div class="card">
 							            		<p:commandButton value="XLS" styleClass="mr-2 mb-2">
-								                    <p:dataExporter type="xls" target="tbl2" fileName="mediciones" exporter="#{dataExporterView.prueba()}"/>
+								                    <p:dataExporter type="xls" target="tbl2" fileName="mediciones" exporter="#{dataExporterView.exportar()}"/>
 								                </p:commandButton>
 								            	<p:dataTable var="valor" id="tbl2" value="#{medicion.valor.entrySet().toArray()}">
 								            		<p:column headerText="Formulario" visible="false">
