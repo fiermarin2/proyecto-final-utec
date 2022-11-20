@@ -121,9 +121,12 @@ public class CasillasDAO {
 	 
 	 public boolean findBooleanCasilla(String nombre){
 			try {
-				TypedQuery<Casilla> query = em.createNamedQuery("Casilla.findCasillaFilter", Casilla.class)
+//				TypedQuery<Casilla> query = em.createNamedQuery("Casilla.findCasillaFilter", Casilla.class)
+//						.setParameter("nombre", nombre);
+				TypedQuery<Casilla> query = em.createQuery("SELECT c FROM Casilla c WHERE c.nombre = :nombre", Casilla.class)
 						.setParameter("nombre", nombre);
-				if(query.getResultList().size()>=1) {
+				System.out.println(query.getResultList().size());
+				if(query.getResultList().size()>0) {
 					return true;
 				}
 				return false;

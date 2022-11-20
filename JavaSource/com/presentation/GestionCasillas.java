@@ -14,12 +14,16 @@ import javax.faces.context.Flash;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
+import javax.validation.constraints.NotNull;
 
 import com.exceptions.ServiciosException;
 import com.services.CasillasBean;
 import com.services.UsuariosBean;
 import com.services.dto.CasillaDTO;
 import com.services.dto.UsuarioDTO;
+
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.UniqueElements;
 
 @Named(value="gestionCasillas")
 @SessionScoped
@@ -34,8 +38,12 @@ public class GestionCasillas implements Serializable{
 	private UsuariosBean userBean;
 	private UsuarioDTO user;
 	private Long id;
+	
+
 	private String nombre;
+	
 	private String tipo;
+	
 	private String ubicacion;
 	private String obligatoria;
 	private String unidadMedida;
@@ -128,31 +136,45 @@ public class GestionCasillas implements Serializable{
 	//agrega usuario
 	public String insertCasilla() {
 		try {		
-			CasillaDTO casillaNueva = new CasillaDTO();
+			if(!beanc.findBooleanCasilla(casilla.getNombre())) {
+				CasillaDTO casillaNueva = new CasillaDTO();
 
-			HttpSession ses = ( HttpSession ) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
-			
-			String userName = (String) ses.getAttribute("username");
-
-			casillaNueva.setNombre(casilla.getNombre());
-			casillaNueva.setDescripcion(casilla.getDescripcion());
-			casillaNueva.setTipo(casilla.getTipo());
-			casillaNueva.setUbicacion(casilla.getUbicacion());
-			casillaNueva.setUnidad_de_medida(casilla.getUnidad_de_medida());
-			casillaNueva.setObligatoria(casilla.getObligatoria());
-			
-			casillaNueva.setUsuario(userName);
-			
-			this.modalidad="view";
-
-			beanc.crear(casillaNueva);
-			this.modalidad = "insert";
-			
-			//mensaje de actualizacion correcta
-			FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se ha agregado un nuevo casilla: " + casillaNueva.getNombre(), "");
-			FacesContext.getCurrentInstance().addMessage(null, facesMsg);
+				HttpSession ses = ( HttpSession ) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
+				nombre = casilla.getNombre();
 				
-			return "menuCasillas.xhtml?faces-redirect=true";
+				String userName = (String) ses.getAttribute("username");
+					casillaNueva.setNombre(casilla.getNombre());
+					casillaNueva.setDescripcion(casilla.getDescripcion());
+					casillaNueva.setTipo(casilla.getTipo());
+					casillaNueva.setUbicacion(casilla.getUbicacion());
+					casillaNueva.setUnidad_de_medida(casilla.getUnidad_de_medida());
+					casillaNueva.setObligatoria(casilla.getObligatoria());
+					
+					casillaNueva.setUsuario(userName);
+					
+					this.modalidad="view";
+
+					beanc.crear(casillaNueva);
+					this.modalidad = "insert";
+					
+					//mensaje de actualizacion correcta
+					FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se ha agregado un nuevo casilla: " + casillaNueva.getNombre(), "");
+					FacesContext.getCurrentInstance().addMessage(null, facesMsg);
+						
+					return "menuCasillas.xhtml?faces-redirect=true";
+			}
+			
+			else {
+				FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+				FacesContext.getCurrentInstance().validationFailed();
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Nombre de casilla duplicado"));
+				
+				return null;
+				
+				
+//				String viewId = FacesContext.getCurrentInstance().getViewRoot().getViewId();
+//				return viewId + "?faces-redirect=true";
+			}
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -166,8 +188,6 @@ public class GestionCasillas implements Serializable{
 			Map<String,String> params = 
 	        fc.getExternalContext().getRequestParameterMap();
 			id = Long.parseLong(params.get("id")); 
-			
-			System.out.println(id);
 			
 			beanc.eliminar(id.longValue());
 			

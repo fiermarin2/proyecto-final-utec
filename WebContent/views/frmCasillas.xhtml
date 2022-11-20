@@ -35,8 +35,11 @@
 										<label class="control-label">Nombre</label>
 									</div>
                                     <div class="col-sm-6">
-                                    	<input class="form-control" placeholder="Nombre" type="text" jsf:id="nombre" name="nombre" value="#{gestionCasillas.casilla.nombre}" required="true"/>
+                                    	<h:inputText class="form-control" placeholder="Nombre" type="text" id="nombre" name="nombre" value="#{gestionCasillas.casilla.nombre}" required="true">
+<!--                                     		<f:validator validatorId = "com.exceptions.CasillaUnique" /> -->
+                                    	</h:inputText>
                                     	<p:message for="nombre" style="color:red" />
+                                    	
                                    	</div>
 								</div>
 								
@@ -102,7 +105,7 @@
 									</div>
                                     <div class="col-sm-6">
                                     	<input class="form-control" placeholder="Descripción" type="text" jsf:id="descripcion" name="descripcion" value="#{gestionCasillas.casilla.descripcion}"/>
-                                    	<p:message for="nombre" style="color:red" />
+                                    	<p:message for="descripcion" style="color:red" />
                                    	</div>
 								</div>
 								

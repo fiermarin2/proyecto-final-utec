@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Entity
 @Table(name="CASILLAS")						
 @NamedQuery(name="Casilla.findAll", query="SELECT c FROM Casilla c WHERE c.borrado = 0 ORDER BY c.id ASC")
-@NamedQuery(name="Casilla.findCasillaFilter", query="SELECT c FROM Casilla c WHERE c.nombre LIKE :nombre AND c.borrado = 0")
+@NamedQuery(name="Casilla.findCasillaFilter", query="SELECT c FROM Casilla c WHERE c.nombre = :nombre AND c.borrado = 0")
 @NamedQuery(name="Casilla.findCasillaFilterID", query="SELECT c FROM Casilla c WHERE c.id = :id AND c.borrado = 0")
 public class Casilla implements Serializable {
 	private static final long serialVersionUID = 1L;

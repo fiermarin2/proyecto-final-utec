@@ -16,15 +16,15 @@ public class UsuarioDTO  implements Serializable{
 	private Long id;
 
 	@NotNull
-	@Length(min=3, max=50 ,message = "El nombre no es válido")
+	@Length(min=3, max=50 ,message = "El nombre debe tener entre 3 y 50 caracteres")
 	private String nombre;
 	
 	@NotNull
-	@Length(min=3, max=50 ,message = "El apellido no es válido")	
+	@Length(min=3, max=50 ,message = "El apellido debe tener entre 3 y 50 caracteres")	
 	private String apellido;
 	
 	@NotNull
-	@Email(message = "Dirección de e-mail no es válida")	
+	@Email(message = "Dirección de e-mail no es valida")	
 	private String mail;
 	
 	@NotNull

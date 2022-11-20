@@ -26,6 +26,7 @@
 	                    <div class="ibox-content">
 							<f:metadata>
 							    <f:viewParam name="id" value="#{gestionUsuarios.id}" /> 
+							    <f:event type="preRenderView" listener="#{gestionUsuarios.preRenderView}"/>
 							</f:metadata>
 										
 							<form jsf:id="usuario" class="form-horizontal">
@@ -51,7 +52,7 @@
 										<label class="control-label">Nombre</label>
 									</div>
                                     <div class="col-sm-6">
-                                    	<input class="form-control" placeholder="Nombre" type="text" jsf:id="nombre" name="nombre" value="#{gestionUsuarios.usuario.nombre}"/>
+                                    	<input class="form-control" placeholder="Nombre" type="text" jsf:id="nombre" name="nombre" value="#{gestionUsuarios.nombre}"/>
                                     	<p:message for="nombre" style="color:red" />
                                    	</div>
 								</div>
@@ -61,7 +62,7 @@
 										<label class="control-label">Apellido</label>
 									</div>
                                     <div class="col-sm-6">
-                                    	<input class="form-control" placeholder="Apellido" type="text" jsf:id="apellido" name="apellido" value="#{gestionUsuarios.usuario.apellido}"/>
+                                    	<input class="form-control" placeholder="Apellido" type="text" jsf:id="apellido" name="apellido" value="#{gestionUsuarios.apellido}"/>
                                     	<p:message for="apellido" style="color:red" />
                                    	</div>
                                 </div>
@@ -71,7 +72,9 @@
 										<label class="control-label">Correo</label>
 									</div>
                                     <div class="col-sm-6">
-                                    	<input class="form-control" placeholder="Correo" type="text" jsf:id="correo" name="correo" value="#{gestionUsuarios.usuario.mail}"/>
+                                    	<input class="form-control" placeholder="Correo" type="text" jsf:id="correo" name="correo" value="#{gestionUsuarios.mail}">
+                                    		<f:validator validatorId = "com.exceptions.EmailFormat" />
+                                    	</input>
                                    		<p:message for="correo" style="color:red" />
                                    	</div>
                                 </div>
@@ -81,7 +84,7 @@
 										<label class="control-label">Nombre Usuario</label>
 									</div>
                                     <div class="col-sm-6">
-                                    	<input class="form-control" placeholder="Nombre Usuario" type="text" jsf:id="nombreUsuario" name="nombreUsuario" value="#{gestionUsuarios.usuario.usuario}"/>
+                                    	<input class="form-control" placeholder="Nombre Usuario" type="text" jsf:id="nombreUsuario" name="nombreUsuario" value="#{gestionUsuarios.nombreUsuario}"/>
                                    		<p:message for="nombreUsuario" style="color:red" />
                                    	</div>
                                 </div>
@@ -91,7 +94,9 @@
 										<label class="control-label">Contraseña</label>
 									</div>
                                     <div class="col-sm-6">
-                                    	<input class="form-control" placeholder="Contraseña" type="password" jsf:id="contrasena" name="contrasena" value="#{gestionUsuarios.contrasena}"/>
+                                    	<input class="form-control" placeholder="Contraseña" type="password" jsf:id="contrasena" name="contrasena" value="#{gestionUsuarios.contrasena}">
+                                    		<f:validator validatorId = "com.exceptions.PasswordFormat"/>
+                                    	</input>
                                    		<p:message for="contrasena" style="color:red" />
                                    	</div>
                                 </div>
@@ -101,7 +106,9 @@
 										<label class="control-label" jsf:rendered="#{gestionUsuarios.showOrHide()}">Documento</label>
 									</div>
                                     <div class="col-sm-6">
-                                    	<input class="form-control" jsf:rendered="#{gestionUsuarios.showOrHide()}" placeholder="Documento" type="text" id="documento" name="documento" value="#{gestionUsuarios.documento}"/>
+                                    	<input class="form-control" rendered="#{gestionUsuarios.showOrHide()}" placeholder="Documento" type="text" jsf:id="documento" name="documento" value="#{gestionUsuarios.documento}">
+                                   			<f:validator validatorId = "com.exceptions.CedulaFormat"/>
+                                   		</input>
                                    		<p:message for="documento" style="color:red" />
                                    	</div>
                                 </div>
@@ -111,7 +118,7 @@
 										<label class="control-label" jsf:rendered="#{gestionUsuarios.showOrHide()}">Domicilio</label>
 									</div>
                                     <div class="col-sm-6">
-                                    	<input class="form-control" jsf:rendered="#{gestionUsuarios.showOrHide()}" placeholder="Domicilio" type="text" id="domicilio" name="domicilio" value="#{gestionUsuarios.domicilio}"/>
+                                    	<input class="form-control" jsf:rendered="#{gestionUsuarios.showOrHide()}" placeholder="Domicilio" type="text" jsf:id="domicilio" name="domicilio" value="#{gestionUsuarios.domicilio}"/>
                                    		<p:message for="domicilio" style="color:red" />
                                    	</div>
                                 </div>
@@ -121,7 +128,7 @@
 										<label class="control-label" jsf:rendered="#{gestionUsuarios.showOrHide()}">Teléfono</label>
 									</div>
                                     <div class="col-sm-6">
-                                    	<input class="form-control" jsf:rendered="#{gestionUsuarios.showOrHide()}" placeholder="Teléfono" type="text" id="telefono" name="telefono" value="#{gestionUsuarios.telefono}"/>
+                                    	<input class="form-control" jsf:rendered="#{gestionUsuarios.showOrHide()}" placeholder="Teléfono" type="text" jsf:id="telefono" name="telefono" value="#{gestionUsuarios.telefono}"/>
                                    		<p:message for="telefono" style="color:red" />
                                    	</div>
                                 </div>
@@ -181,7 +188,7 @@
                                         <a class="btn btn-white" href="menuUsuarios.xhtml"> Cancelar</a>
                                         <h:commandButton value="Guardar" rendered="#{!gestionUsuarios.modoEdicion}" 
 											update=":form" action="#{gestionUsuarios.insertUsuario()}" class="btn btn-primary">
-										    	<f:param name="id" value="${gestionEmpleado.id}" />
+										    	<f:param name="id" value="${gestionUsuarios.id}" />
 								    			<f:param name="modalidad" value="update" />
 										</h:commandButton>
                                     </div>

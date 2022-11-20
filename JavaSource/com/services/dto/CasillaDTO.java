@@ -2,15 +2,30 @@ package com.services.dto;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.UniqueElements;
+
 @SuppressWarnings("serial")
 public class CasillaDTO implements Serializable{
 	
 	private Long id;
+	
+	@NotNull(message = "El campo nombre no puede ser nulo")
 	private String nombre;
+	
+	@NotNull(message = "El campo tipo no puede ser nulo")
 	private String tipo;
+	
+	@NotNull(message = "El campo ubicacion no puede ser nulo")
 	private String ubicacion;
+	
 	private boolean obligatoria;
+	
+	@NotNull(message = "El campo unidad de medida no puede ser nulo")
 	private String unidad_de_medida;
+	
 	private String usuario;
 	private String descripcion;
 

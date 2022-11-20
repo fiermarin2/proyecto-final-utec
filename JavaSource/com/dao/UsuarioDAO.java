@@ -190,17 +190,19 @@ public class UsuarioDAO {
 	}*/
 
 	public Usuario obtenerLogIn(String usuario, char[] contrasenia) throws ServiciosException {
-    	try {
+		try {
     		TypedQuery<Usuario> query = em.createQuery(
     				"SELECT u FROM Usuario u WHERE u.nombreUsuario = :usuario AND u.contrasena = :contrasenia AND borrado = 0", Usuario.class)
     				.setParameter("usuario", usuario)
     				.setParameter("contrasenia", contrasenia);
     		
-			return query.getSingleResult();
+    		if(query.getSingleResult() != null)
+    			return query.getSingleResult();
+    		else
+    			return null;
 			
     	}catch(NoResultException n) {
-    		throw new ServiciosException("No se reconoce usuario y/o contraseña o el usuario no existe");
-    		
+    		return null;
 		} catch (Exception e) {
 			
 			throw new ServiciosException("Listar " + e.getMessage());

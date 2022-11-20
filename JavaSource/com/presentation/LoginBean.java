@@ -6,8 +6,10 @@ import java.io.Serializable;
 import java.util.Hashtable;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.faces.context.Flash;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.naming.AuthenticationException;
@@ -78,7 +80,7 @@ public class LoginBean implements Serializable {
 				beanu.modificar(usuario);
 			}
 
-		} catch (ServiciosException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -86,20 +88,41 @@ public class LoginBean implements Serializable {
 
 	public String checkLogIn() throws ServiciosException, IOException {
 		
-		usr = usr.toLowerCase();
-		
-		if (usr.contains("\\")) beanu.usuarioLDAP(usr, pwd);
-		
-		usuario = beanu.mapeo(daou.obtenerLogIn(usr, pwd.toCharArray()));
+		try {
+			usr = usr.toLowerCase();
+			
+			if (usr.contains("\\")) 
+				beanu.usuarioLDAP(usr, pwd);
+			else
+				usuario = beanu.mapeo(daou.obtenerLogIn(usr, pwd.toCharArray()));
 
-		HttpSession ses = ( HttpSession ) FacesContext.getCurrentInstance().getExternalContext().getSession( true );
-		ses.setAttribute("id", usuario.getId());
-		ses.setAttribute("username", usr);
 
-		if (usuario != null) {
-			return "views/menuPrincipal.xhtml?faces-redirect=true";
+			if (usuario != null) {
+				HttpSession ses = ( HttpSession ) FacesContext.getCurrentInstance().getExternalContext().getSession( true );
+				ses.setAttribute("id", usuario.getId());
+				ses.setAttribute("username", usr);
+				
+				return "views/menuPrincipal.xhtml?faces-redirect=true";
+			}
+			else {
+				FacesContext fc = FacesContext.getCurrentInstance();
+				Flash flash = fc.getExternalContext().getFlash();
+				flash.setKeepMessages(true);
+				FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Error usuario y/o contraseña", "");
+				FacesContext.getCurrentInstance().addMessage(null, facesMsg);
+				
+				return null;
+			}
+		} catch (Exception e) {
+			FacesContext fc = FacesContext.getCurrentInstance();
+			Flash flash = fc.getExternalContext().getFlash();
+			flash.setKeepMessages(true);
+			FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Error usuario y/o contraseña", "");
+			FacesContext.getCurrentInstance().addMessage(null, facesMsg);
+			
+			return null;
 		}
-		return "Login";
+		
 	}
 
 	public void logout() {
