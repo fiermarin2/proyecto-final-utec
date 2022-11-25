@@ -158,10 +158,16 @@ public class UsuariosBean implements Serializable {
 		}
 	}
 
-	public boolean buscarDocument(int documento) {
+	public boolean buscarDocument(int documento, String tipoUsuario) {
 		try {
-			Administrador a = usuarioDAO.findAdministradorByDocument(documento,0);
-			Investigador i = usuarioDAO.findInvestigadorByDocument(documento,0);
+			Administrador a = null;
+			Investigador i = null;
+			if(tipoUsuario.equals("ADMINISTRADOR")) {
+				a = (Administrador) usuarioDAO.findAdministradorByDocument(documento,0);
+			}
+			else
+				i = (Investigador) usuarioDAO.findInvestigadorByDocument(documento,0);
+			
 			if(a != null || i != null)
 				return true;
 			else

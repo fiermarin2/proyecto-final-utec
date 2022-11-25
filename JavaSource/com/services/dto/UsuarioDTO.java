@@ -16,11 +16,11 @@ public class UsuarioDTO  implements Serializable{
 	private Long id;
 
 	@NotNull
-	@Length(min=3, max=50 ,message = "El nombre debe tener entre 3 y 50 caracteres")
+	@Length(min=3, max=30 ,message = "El nombre debe tener entre 3 y 30 caracteres")
 	private String nombre;
 	
 	@NotNull
-	@Length(min=3, max=50 ,message = "El apellido debe tener entre 3 y 50 caracteres")	
+	@Length(min=3, max=30 ,message = "El apellido debe tener entre 3 y 30 caracteres")	
 	private String apellido;
 	
 	@NotNull
@@ -28,9 +28,11 @@ public class UsuarioDTO  implements Serializable{
 	private String mail;
 	
 	@NotNull
-	@Length(min=3, max=50 ,message = "El nombre de usuario debe tener entre 3 y 50 caracteres")	
+	@Length(min=3, max=30 ,message = "El nombre de usuario debe tener entre 3 y 30 caracteres")	
 	private String usuario;
 	
+	@NotNull
+	@Length(min = 8)
 	private char[] contrasena;
 	
 	private TipoUsuario tipo;
