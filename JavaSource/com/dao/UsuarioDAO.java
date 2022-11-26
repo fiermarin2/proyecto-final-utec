@@ -99,7 +99,7 @@ public class UsuarioDAO {
 		}
 	}
 	
-	public Object findInvestigadorByDocument(int documento, int borrado) /*throws ServiciosException*/{
+	public Investigador findInvestigadorByDocument(int documento, int borrado) /*throws ServiciosException*/{
 		try {
 				TypedQuery<Investigador> query = em.createNamedQuery("Investigador.findDocument",Investigador.class)
 						.setParameter("documento", documento)
