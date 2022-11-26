@@ -3,6 +3,8 @@ package com.services.dto;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import javax.validation.constraints.NotNull;
+
 import com.entities.TipoUsuario;
 
 public class AdministradorDTO extends UsuarioDTO {	
@@ -11,7 +13,9 @@ public class AdministradorDTO extends UsuarioDTO {
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	@NotNull
 	private int documento;
+	
 	private String domicilio;
 	private int telefono;
 	private CiudadDTO ciudad;

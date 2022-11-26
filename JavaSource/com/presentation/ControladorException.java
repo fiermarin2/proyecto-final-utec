@@ -60,17 +60,17 @@ public class ControladorException {
 		return false;
 	}
 
-	public boolean existeDocumento(int documento) {
-		//return 0 no existe documento
-		//return 1 existe documento y borrado = 0;
-		//return 2 existe documento y borrado = 1;
-		boolean option = beanUsuarios.buscarDocument(documento);
-		if(option == true) {
-			JOptionPane.showMessageDialog(null, "Existe documento");
-			return true;
-		}
-		return false;
-	}
+//	public boolean existeDocumento(int documento) {
+//		//return 0 no existe documento
+//		//return 1 existe documento y borrado = 0;
+//		//return 2 existe documento y borrado = 1;
+//		boolean option = beanUsuarios.buscarDocument(documento);
+//		if(option == true) {
+//			JOptionPane.showMessageDialog(null, "Existe documento");
+//			return true;
+//		}
+//		return false;
+//	}
 
 	public boolean isEmpty(String valor, String nombreCampo) {
 		if (valor==null || valor.equals("") || valor.equals("null")) {

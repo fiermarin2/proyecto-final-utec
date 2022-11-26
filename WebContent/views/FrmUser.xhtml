@@ -52,7 +52,9 @@
 										<label class="control-label">Nombre</label>
 									</div>
                                     <div class="col-sm-6">
-                                    	<input class="form-control" placeholder="Nombre" type="text" jsf:id="nombre" name="nombre" value="#{gestionUsuarios.nombre}"/>
+                                    	<input class="form-control" placeholder="Nombre" type="text" jsf:id="nombre" name="nombre" value="#{gestionUsuarios.nombre}">
+<!--                                    			<f:validator validatorId = "com.exceptions.OnlyCharacters"/> -->
+                                   		</input>
                                     	<p:message for="nombre" style="color:red" />
                                    	</div>
 								</div>
@@ -186,11 +188,20 @@
                                 <div class="form-group">
                                     <div class="col-sm-4 col-sm-offset-2">
                                         <a class="btn btn-white" href="menuUsuarios.xhtml"> Cancelar</a>
-                                        <h:commandButton value="Guardar" rendered="#{!gestionUsuarios.modoEdicion}" 
-											update=":form" action="#{gestionUsuarios.insertUsuario()}" class="btn btn-primary">
-										    	<f:param name="id" value="${gestionUsuarios.id}" />
-								    			<f:param name="modalidad" value="update" />
-										</h:commandButton>
+                                        <c:choose>
+										    <c:when test="#{gestionUsuarios.modoEdicion}">
+										        <h:commandButton value="Guardar" rendered="true" update=":form" action="#{gestionUsuarios.insertUsuario()}" class="btn btn-primary">
+											    	<f:param name="id" value="${gestionUsuarios.id}" />
+									    			<f:param name="modalidad" value="update" />
+												</h:commandButton>
+										    </c:when>
+										    <c:otherwise>
+										        <h:commandButton value="Guardar" rendered="true" update=":form" action="#{gestionUsuarios.insertUsuario()}" class="btn btn-primary">
+									    			<f:param name="modalidad" value="insert" />
+												</h:commandButton>
+										    </c:otherwise>
+										</c:choose>
+                                        
                                     </div>
                                 </div>
 							</form>
