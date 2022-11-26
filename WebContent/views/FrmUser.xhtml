@@ -53,7 +53,7 @@
 									</div>
                                     <div class="col-sm-6">
                                     	<input class="form-control" placeholder="Nombre" type="text" jsf:id="nombre" name="nombre" value="#{gestionUsuarios.nombre}">
-<!--                                    			<f:validator validatorId = "com.exceptions.OnlyCharacters"/> -->
+                                   			<f:validator validatorId = "com.exceptions.OnlyCharacters"/>
                                    		</input>
                                     	<p:message for="nombre" style="color:red" />
                                    	</div>
@@ -64,7 +64,9 @@
 										<label class="control-label">Apellido</label>
 									</div>
                                     <div class="col-sm-6">
-                                    	<input class="form-control" placeholder="Apellido" type="text" jsf:id="apellido" name="apellido" value="#{gestionUsuarios.apellido}"/>
+                                    	<input class="form-control" placeholder="Apellido" type="text" jsf:id="apellido" name="apellido" value="#{gestionUsuarios.apellido}">
+                                   			<f:validator validatorId = "com.exceptions.OnlyCharacters"/>
+                                   		</input>
                                     	<p:message for="apellido" style="color:red" />
                                    	</div>
                                 </div>
@@ -130,7 +132,9 @@
 										<label class="control-label" jsf:rendered="#{gestionUsuarios.showOrHide()}">Teléfono</label>
 									</div>
                                     <div class="col-sm-6">
-                                    	<input class="form-control" jsf:rendered="#{gestionUsuarios.showOrHide()}" placeholder="Teléfono" type="text" jsf:id="telefono" name="telefono" value="#{gestionUsuarios.telefono}"/>
+                                    	<input class="form-control" jsf:rendered="#{gestionUsuarios.showOrHide()}" placeholder="Teléfono" type="text" jsf:id="telefono" name="telefono" value="#{gestionUsuarios.telefono}">
+                                   			<f:validator validatorId = "com.exceptions.OnlyNumbers"/>
+                                   		</input>
                                    		<p:message for="telefono" style="color:red" />
                                    	</div>
                                 </div>
@@ -178,7 +182,9 @@
 										<label class="control-label" jsf:rendered="#{gestionUsuarios.showOrHide()}">Ocupacion</label>
 									</div>
                                     <div class="col-sm-6">
-                                    	<input class="form-control" jsf:rendered="#{gestionUsuarios.showOrHide()}" placeholder="Ocupacion" type="text" id="ocupacion" name="ocupacion" value="#{gestionUsuarios.ocupacion}"/>
+                                    	<input class="form-control" jsf:rendered="#{gestionUsuarios.showOrHide()}" placeholder="Ocupacion" type="text" id="ocupacion" name="ocupacion" value="#{gestionUsuarios.ocupacion}">
+                                   			<f:validator validatorId = "com.exceptions.OnlyCharacters"/>
+                                   		</input>
                                    		<p:message for="ocupacion" style="color:red" />
                                    	</div>
                                 </div>

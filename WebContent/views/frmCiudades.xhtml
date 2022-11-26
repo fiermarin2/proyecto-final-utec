@@ -35,7 +35,9 @@
 										<label class="control-label">Nombre</label>
 									</div>
                                     <div class="col-sm-6">
-                                    	<input class="form-control" placeholder="Nombre" type="text" jsf:id="nombre" name="nombre" value="#{gestionCiudades.ciudad.nombre}"/>
+                                    	<input class="form-control" placeholder="Nombre" type="text" jsf:id="nombre" name="nombre" value="#{gestionCiudades.ciudad.nombre}">
+                                   			<f:validator validatorId = "com.exceptions.OnlyCharacters"/>
+                                   		</input>
                                     	<p:message for="nombre" style="color:red" />
                                    	</div>
 								</div>

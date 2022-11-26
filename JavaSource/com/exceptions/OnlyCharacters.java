@@ -13,7 +13,8 @@ import javax.faces.validator.ValidatorException;
 @FacesValidator("com.exceptions.OnlyCharacters")
 public class OnlyCharacters implements Validator{
 	
-	private static final String CHARACTERS = "[1-9]/[a-zA-Z](-[1-9]){3,4}"; 
+	//private static final String CHARACTERS = "[1-9]/[a-zA-Z](-[1-9]){3,4}";  [a-zA-Z]+
+	private static final String CHARACTERS = "[a-zA-Z ]+";
 			private Pattern pattern;
 			private Matcher matcher;
 			
@@ -25,9 +26,6 @@ public class OnlyCharacters implements Validator{
 				
 				    matcher = pattern.matcher(value.toString());
 				    if(!matcher.matches()){      
-
-				    	System.out.println("LA FLAG DEL VALIDATOR" + matcher.matches());
-
 				    	FacesMessage msg = new FacesMessage("Solo puede ingresar caracteres alfabeticos", "Solo puede ingresar caracteres alfabeticos");
 				    	msg.setSeverity(FacesMessage.SEVERITY_ERROR);
 				    	throw new ValidatorException(msg);
