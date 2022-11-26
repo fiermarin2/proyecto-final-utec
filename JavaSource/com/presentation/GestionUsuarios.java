@@ -52,9 +52,7 @@ public class GestionUsuarios implements Serializable{
 	private String departamento;
 	private String ciudad;
 	private String ocupacion;
-	private boolean error = false;
-	
-	private boolean modoEdicion=false;
+	private boolean modoEdicion = false;
 	
 	public boolean showOrHide() {
 		try {

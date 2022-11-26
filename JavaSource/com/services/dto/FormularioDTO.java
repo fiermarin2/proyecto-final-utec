@@ -6,13 +6,18 @@ import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.Length;
+
 @SuppressWarnings("serial")
 public class FormularioDTO implements Serializable {
 	
 	private Long id;
+	@NotNull
+	@Length(min=3, max=30 ,message = "El nombre debe tener entre 3 y 30 caracteres")
 	private String nombre;
 	private Date fecha_hora;
-	//private String metodo_medicion;
 	private String comentario;
 	private UsuarioDTO usuario;
 	private ArrayList<CasillaDTO> casillas;
