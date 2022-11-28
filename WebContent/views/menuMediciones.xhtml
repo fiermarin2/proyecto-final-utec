@@ -35,10 +35,9 @@
 							                </div>
 							                <br/>
 							               <div class="input-group"> 
-												<h:commandButton id="visibleBrowseButton" value="IMPORTAR" onclick="uploadFile.click()" immediate="true" class="btn btn-success">
-												
-												</h:commandButton>
-							                	<input type="file" id="uploadFile" style="display: none;" size="50" />
+											        <p:fileUpload value="#{gestionMediciones.uploadedFile}" mode="simple" skinSimple="true" auto="true"/>
+
+        											<p:commandButton value="Submit" ajax="false" action="#{gestionMediciones.importar()}" styleClass="mt-3 ui-button-outlined block"/>
 							               </div>
 							            </f:facet>
 

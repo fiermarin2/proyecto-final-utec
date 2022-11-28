@@ -32,6 +32,9 @@ public class CasillaDTO implements Serializable{
 	private String unidad_de_medida;
 	
 	private String usuario;
+	
+	private String valor;
+	
 	private String descripcion;
 
 	
@@ -87,6 +90,14 @@ public class CasillaDTO implements Serializable{
 	@Override
 	public String toString() {
 		return tipo;
+	}
+	public String getValor() {
+		return valor;
+		
+	}
+	public void setValor(String valor) {
+		this.valor = valor;
+		
 	}
 
 }

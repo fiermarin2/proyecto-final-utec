@@ -23,6 +23,10 @@
 	                        </div>
 	                    </div>
 	                    <div class="ibox-content">
+	                    <f:metadata>
+	                    		<f:viewParam name="id" value="#{gestionMediciones.id}" /> 
+							    <f:event type="preRenderView" listener="#{gestionMediciones.preRenderView}"/>
+							</f:metadata>
 							<form jsf:id="medicion" class="form-horizontal">
 								<div class="row">
 									<div class="col-sm-1 pt-2">
@@ -60,7 +64,7 @@
 												<label class="control-label">#{casilla.nombre}</label>
 											</div>
 		                                    <div class="col-sm-6">
-		                                    	<input class="form-control" placeholder="#{casilla.unidad_de_medida}" type="text" jsf:id="#{casilla.id}" name="nombre" value="#{casilla.usuario}" required="#{casilla.obligatoria ? 'true' : 'false'}"/>
+		                                    	<input class="form-control" placeholder="#{casilla.unidad_de_medida}" type="text" jsf:id="#{casilla.id}" name="nombre" value="#{casilla.valor}" required="#{casilla.obligatoria ? 'true' : 'false'}"/>
 		                                   	</div>
 										</div>
 		                    		</p:repeat>
@@ -72,6 +76,19 @@
                                     <div class="col-sm-4 col-sm-offset-2">
                                         <a class="btn btn-white" href="menuMediciones.xhtml"> Cancelar</a>
                                         <h:commandButton value="Guardar" action="#{gestionMediciones.insertFormulario()}" class="btn btn-primary" />
+<!--                                         <c:choose> -->
+<!-- 										    <c:when test="#{gestionUsuarios.modoEdicion}"> -->
+<!-- 										        <h:commandButton value="Guardar" rendered="true" update=":form" action="#{gestionUsuarios.insertUsuario()}" class="btn btn-primary"> -->
+<!-- 											    	<f:param name="id" value="${gestionUsuarios.id}" /> -->
+<!-- 									    			<f:param name="modalidad" value="update" /> -->
+<!-- 												</h:commandButton> -->
+<!-- 										    </c:when> -->
+<!-- 										    <c:otherwise> -->
+<!-- 										        <h:commandButton value="Guardar" rendered="true" update=":form" action="#{gestionUsuarios.insertUsuario()}" class="btn btn-primary"> -->
+<!-- 									    			<f:param name="modalidad" value="insert" /> -->
+<!-- 												</h:commandButton> -->
+<!-- 										    </c:otherwise> -->
+<!-- 										</c:choose> -->
                                     </div>
                                 </div>
 							</form>
