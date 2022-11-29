@@ -17,7 +17,7 @@
 		                </div>
 		                <div class="ibox-content">	 
 		                
-						    <form jsf:id="departamentos">
+						    <form jsf:id="departamentos" enctype="multipart/form-data">
 			                    <div class="table-responsive">
 
 			                    	<p:dataTable var="medicion" widgetVar="dtMediciones" value="#{gestionMediciones.listar()}" rowKey="#{medicion.id}" reflow="true" styleClass="products-table">
@@ -34,11 +34,11 @@
 							                    </span>
 							                </div>
 							                <br/>
-							               <div class="input-group"> 
-												<h:commandButton id="visibleBrowseButton" value="IMPORTAR" onclick="uploadFile.click()" immediate="true" class="btn btn-success">
-												
-												</h:commandButton>
-							                	<input type="file" id="uploadFile" style="display: none;" size="50" />
+							               	<div class="input-group">
+							               		<h:outputLabel value="Importar medición " />
+										        <h:inputFile value="#{gestionMediciones.file}" aria-label="File browser example">
+											        <p:ajax listener="#{gestionMediciones.importar()}" />
+											    </h:inputFile>
 							               </div>
 							            </f:facet>
 

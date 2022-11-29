@@ -126,7 +126,8 @@ public class GestionDepartamentos implements Serializable{
 				//mensaje de actualizacion correcta
 				FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se ha agregado un nuevo Departamento: " + departamentoNuevo.getNombre(), "");
 				FacesContext.getCurrentInstance().addMessage(null, facesMsg);
-				
+				departamento = new DepartamentoDTO();
+				id = null;
 				return "menuDepartamentos.xhtml?faces-redirect=true";
 			} else {
 				departamentoNuevo.setId(departamento.getId());
@@ -136,6 +137,8 @@ public class GestionDepartamentos implements Serializable{
 				FacesContext.getCurrentInstance().addMessage(null, facesMsg);
 				
 				beanc.mergeDepartamento(departamentoNuevo);
+				departamento = new DepartamentoDTO();
+				id = null;
 				return "menuDepartamentos.xhtml?faces-redirect=true";
 			}
 		} catch (Exception e) {

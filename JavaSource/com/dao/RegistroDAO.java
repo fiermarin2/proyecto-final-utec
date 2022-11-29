@@ -87,6 +87,15 @@ public class RegistroDAO {
 		}
     }
     
+    public List<Registro> findById(Long id) throws ServiciosException{
+    	try {
+			TypedQuery<Registro> query = em.createNamedQuery("Registro.findByID",Registro.class)
+					.setParameter("id", id);
+			return query.getResultList(); 
+		} catch (Exception e) {
+			throw new ServiciosException("No existen registros");
+		}
+    }
     
     //FIXME: arreglar para que ande
     public List<Registro> findByFechas(Date min, Date max) throws ServiciosException{

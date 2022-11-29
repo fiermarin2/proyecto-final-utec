@@ -142,6 +142,20 @@ public class RegistrosBean {
 		}
 	}
 	
+	public RegistroDTO buscar(Long id) {
+		try {
+			RegistroDTO registro = new RegistroDTO();
+
+			for (Registro d : daor.findById(id))
+				registro = this.mapeo(d);
+
+			return registro;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
 	public List<RegistroDTO> obtenerPorFechas(Date min, Date max) {
 		try {
 			List<RegistroDTO> lista = new ArrayList<>();

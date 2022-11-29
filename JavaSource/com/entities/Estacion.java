@@ -11,6 +11,7 @@ import javax.persistence.*;
 @Table(name="ESTA_MEDICIONES")
 @NamedQuery(name="Estacion.findAll", query="SELECT e FROM Estacion e")
 @NamedQuery(name = "Estacion.findByID", query = "SELECT e FROM Estacion e WHERE e.id LIKE :id")
+@NamedQuery(name = "Estacion.findByName", query = "SELECT e FROM Estacion e WHERE e.nombre = :nombre")
 @NamedQuery(name = "Estacion.findAllFiltered", query = "SELECT e FROM Estacion e WHERE e.nombre LIKE :nombre")
 public class Estacion implements Serializable {
 	private static final long serialVersionUID = 1L;

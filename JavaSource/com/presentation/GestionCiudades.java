@@ -134,7 +134,8 @@ public class GestionCiudades implements Serializable {
 				//mensaje de actualizacion correcta
 				FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se ha agregado una nueva Ciudad: " + ciudadNuevo.getNombre(), "");
 				FacesContext.getCurrentInstance().addMessage(null, facesMsg);
-				
+				ciudad = new CiudadDTO();
+				id = null;
 				return "menuCiudades.xhtml?faces-redirect=true";
 			} else {
 				ciudadNuevo.setId(ciudad.getId());
@@ -144,6 +145,8 @@ public class GestionCiudades implements Serializable {
 				FacesContext.getCurrentInstance().addMessage(null, facesMsg);
 				
 				beanc.mergeCiudad(ciudadNuevo);
+				id = null;
+				ciudad = new CiudadDTO();
 				return "menuCiudades.xhtml?faces-redirect=true";
 			}
 		} catch (Exception e) {

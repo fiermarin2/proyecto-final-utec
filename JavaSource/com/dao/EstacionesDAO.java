@@ -88,4 +88,14 @@ public class EstacionesDAO {
 			throw new ServiciosException("Error al buscar de estaci�n");
 		}
 	}
+	
+	public Estacion findByName(String nombre)  throws ServiciosException {
+		try {
+			TypedQuery<Estacion> query = em.createNamedQuery("Estacion.findByName", Estacion.class)
+					.setParameter("nombre", nombre);
+			return query.getSingleResult();
+		} catch (Exception e) {
+			throw new ServiciosException("Error al buscar de estaci�n");
+		}
+	}
 }

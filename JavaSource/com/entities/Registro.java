@@ -28,6 +28,7 @@ import javax.persistence.TemporalType;
 @Table(name="OBTI_DATOS")
 @NamedQuery(name="Registro.findAll", query="SELECT o FROM Registro o ORDER BY o.fechaHora DESC")
 @NamedQuery(name="Registro.findByUserID", query="SELECT a FROM Registro a WHERE a.usuario.id = :id")
+@NamedQuery(name="Registro.findByID", query="SELECT a FROM Registro a WHERE a.id = :id")
 @NamedQuery(name="Registro.findAllPorFormulario", query="SELECT o FROM Registro o WHERE o.formulario.id = :formulario")
 @NamedQuery(name="Registro.findAllPorFecha", query="SELECT o FROM Registro o WHERE o.fechaHora >= :min and o.fechaHora <= :max")
 public class Registro implements Serializable {

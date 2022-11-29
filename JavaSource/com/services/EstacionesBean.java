@@ -172,4 +172,13 @@ public class EstacionesBean {
 			throw new ServiciosException("Error al listar estaciones");
 		}
 	}
+	
+	public EstacionDTO obtenerPorNombre(String nombre) throws ServiciosException {
+		try {
+			return mapInversoEstacion(daoe.findByName(nombre));
+				
+		} catch (Exception e) {
+			throw new ServiciosException("Error al listar estaciones");
+		}
+	}
 }
