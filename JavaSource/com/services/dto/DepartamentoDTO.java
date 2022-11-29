@@ -1,7 +1,14 @@
 package com.services.dto;
 
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.Length;
+
 public class DepartamentoDTO {
 	private Long id;
+	
+	@NotNull(message = "El nombre no puede ser nulo")
+	@Length(min = 3 , max = 30, message = "El nombre debe tener entre 3 y 30 caracteres")
 	private String nombre;
 	
 	public Long getId() {

@@ -2,17 +2,28 @@ package com.services.dto;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.Length;
+
 @SuppressWarnings("serial")
 public class EstacionDTO implements Serializable {
 	
 	private Long id;
+	
+	@NotNull
+	@Length(min=3, max=30 ,message = "El nombre debe tener entre 3 y 30 caracteres")
 	private String nombre;
 	private String calidad_agua;
 	private String humedad_relativa;
+	@NotNull
 	private DepartamentoDTO departamento;
+	
+	@NotNull	
 	private Double latitud;
+	@NotNull
 	private Double longitud;
-	//esto seria javier.dominguez.
+
 	private String nombre_de_usuario;
 	
 	public Long getId() {

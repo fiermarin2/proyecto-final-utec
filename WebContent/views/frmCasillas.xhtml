@@ -36,7 +36,7 @@
 									</div>
                                     <div class="col-sm-6">
                                     	<h:inputText class="form-control" placeholder="Nombre" type="text" id="nombre" name="nombre" value="#{gestionCasillas.casilla.nombre}" required="true">
-<!--                                     		<f:validator validatorId = "com.exceptions.CasillaUnique" /> -->
+                                   			<f:validator validatorId = "com.exceptions.OnlyCharacters" />
                                     	</h:inputText>
                                     	<p:message for="nombre" style="color:red" />
                                     	
@@ -48,7 +48,9 @@
 										<label class="control-label">Unidad de medida</label>
 									</div>
                                     <div class="col-sm-6">
-                                    	<input class="form-control" placeholder="Unidad de medida" type="text" jsf:id="unidad_de_medida" name="unidad_de_medida" value="#{gestionCasillas.casilla.unidad_de_medida}" required="true"/>
+                                    	<input class="form-control" placeholder="Unidad de medida" type="text" jsf:id="unidad_de_medida" name="unidad_de_medida" value="#{gestionCasillas.casilla.unidad_de_medida}" required="true">
+                                   			<f:validator validatorId = "com.exceptions.OnlyCharactersAndNumbers" /> 
+                                   		</input> 
                                     	<p:message for="unidad_de_medida" style="color:red" />
                                    	</div>
 								</div>

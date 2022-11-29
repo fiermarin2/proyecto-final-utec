@@ -5,7 +5,6 @@ import java.io.Serializable;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.UniqueElements;
 
 @SuppressWarnings("serial")
 public class CasillaDTO implements Serializable{
@@ -13,17 +12,23 @@ public class CasillaDTO implements Serializable{
 	private Long id;
 	
 	@NotNull(message = "El campo nombre no puede ser nulo")
+	@Length(min=3, max=30 ,message = "El nombre debe tener entre 3 y 30 caracteres")
 	private String nombre;
 	
 	@NotNull(message = "El campo tipo no puede ser nulo")
+	@Length(min=3, max=30 ,message = "El campo tipo debe tener entre 3 y 30 caracteres")
 	private String tipo;
 	
 	@NotNull(message = "El campo ubicacion no puede ser nulo")
+	@Length(min=3, max=30 ,message = "El campo ubicacion debe tener entre 3 y 30 caracteres")
 	private String ubicacion;
 	
+	@NotNull(message = "El campo obligatoria no puede ser nulo")
+	@Length(min=3, max=30 ,message = "El campo obligatoria debe tener entre 3 y 30 caracteres")
 	private boolean obligatoria;
 	
 	@NotNull(message = "El campo unidad de medida no puede ser nulo")
+	@Length(min=3, max=30 ,message = "El campo unidad de medida debe tener entre 3 y 30 caracteres")
 	private String unidad_de_medida;
 	
 	private String usuario;

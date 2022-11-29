@@ -52,8 +52,7 @@ public class GestionUsuarios implements Serializable{
 	private String departamento;
 	private String ciudad;
 	private String ocupacion;
-	
-	private boolean modoEdicion=false;
+	private boolean modoEdicion = false;
 	
 	public boolean showOrHide() {
 		try {
@@ -96,81 +95,84 @@ public class GestionUsuarios implements Serializable{
 	
 	public void preRenderView() {
 		try {
-			id = null;
-			FacesContext fc = FacesContext.getCurrentInstance();
-			Map<String,String> params = 
-	        fc.getExternalContext().getRequestParameterMap();
-			modalidad =  params.get("modalidad"); 
-			if(params.get("id") != null) {
-				id =  Long.parseLong(params.get("id")); 
-				System.out.println(id);
-			}
 			
-			if(id!=null) {
-				usuario = beanu.buscar(id);
-				if(usuario.getTipo() == TipoUsuario.ADMINISTRADOR) {
-					documento = String.valueOf(((AdministradorDTO) usuario).getDocumento());
-					domicilio = String.valueOf(((AdministradorDTO) usuario).getDomicilio());					
-					telefono = String.valueOf(((AdministradorDTO) usuario).getTelefono());
-					ciudad = String.valueOf(((AdministradorDTO) usuario).getCiudad().getId());
-					departamento = String.valueOf(((AdministradorDTO) usuario).getCiudad().getDepartamento().getNombre());
+				id = null;
+				FacesContext fc = FacesContext.getCurrentInstance();
+				Map<String,String> params = 
+		        fc.getExternalContext().getRequestParameterMap();
+				modalidad =  params.get("modalidad"); 
+				if(params.get("id") != null) {
+					id =  Long.parseLong(params.get("id")); 
+					System.out.println(id);
+				}
+				
+				if(id != null) {
+					usuario = beanu.buscar(id);
+					if(usuario.getTipo() == TipoUsuario.ADMINISTRADOR) {
+						documento = String.valueOf(((AdministradorDTO) usuario).getDocumento());
+						domicilio = String.valueOf(((AdministradorDTO) usuario).getDomicilio());					
+						telefono = String.valueOf(((AdministradorDTO) usuario).getTelefono());
+						ciudad = String.valueOf(((AdministradorDTO) usuario).getCiudad().getId());
+						departamento = String.valueOf(((AdministradorDTO) usuario).getCiudad().getDepartamento().getNombre());
+						nombre = usuario.getNombre();
+						apellido = usuario.getApellido();
+						nombreUsuario = usuario.getUsuario();
+						mail = usuario.getMail();
+						contrasena = usuario.getContrasena().toString();
+						tipoUsuario = usuario.getTipo().toString();
+						
+					}else if (usuario.getTipo() == TipoUsuario.INVESTIGADOR) {
+						documento = String.valueOf(((InvestigadorDTO) usuario).getDocumento());
+						domicilio = String.valueOf(((InvestigadorDTO) usuario).getDomicilio());					
+						telefono = String.valueOf(((InvestigadorDTO) usuario).getTelefono());
+						ciudad = String.valueOf(((InvestigadorDTO) usuario).getCiudad().getId());
+						departamento = String.valueOf(((InvestigadorDTO) usuario).getCiudad().getDepartamento().getNombre());
+						nombre = usuario.getNombre();
+						apellido = usuario.getApellido();
+						nombreUsuario = usuario.getUsuario();
+						mail = usuario.getMail();
+						contrasena = usuario.getContrasena().toString();
+						tipoUsuario = usuario.getTipo().toString();
+					}else {
+						ocupacion = String.valueOf(((AficionadoDTO) usuario).getOcupacion());
+						nombre = usuario.getNombre();
+						apellido = usuario.getApellido();
+						nombreUsuario = usuario.getUsuario();
+						mail = usuario.getMail();
+						contrasena = usuario.getContrasena().toString();
+						tipoUsuario = usuario.getTipo().toString();
+					}
 					nombre = usuario.getNombre();
 					apellido = usuario.getApellido();
-					nombreUsuario = usuario.getUsuario();
 					mail = usuario.getMail();
 					contrasena = usuario.getContrasena().toString();
 					tipoUsuario = usuario.getTipo().toString();
 					
-				}else if (usuario.getTipo() == TipoUsuario.INVESTIGADOR) {
-					documento = String.valueOf(((InvestigadorDTO) usuario).getDocumento());
-					domicilio = String.valueOf(((InvestigadorDTO) usuario).getDomicilio());					
-					telefono = String.valueOf(((InvestigadorDTO) usuario).getTelefono());
-					ciudad = String.valueOf(((InvestigadorDTO) usuario).getCiudad().getId());
-					departamento = String.valueOf(((InvestigadorDTO) usuario).getCiudad().getDepartamento().getNombre());
-					nombre = usuario.getNombre();
-					apellido = usuario.getApellido();
-					nombreUsuario = usuario.getUsuario();
-					mail = usuario.getMail();
-					contrasena = usuario.getContrasena().toString();
-					tipoUsuario = usuario.getTipo().toString();
-				}else {
-					ocupacion = String.valueOf(((AficionadoDTO) usuario).getOcupacion());
-					nombre = usuario.getNombre();
-					apellido = usuario.getApellido();
-					nombreUsuario = usuario.getUsuario();
-					mail = usuario.getMail();
-					contrasena = usuario.getContrasena().toString();
-					tipoUsuario = usuario.getTipo().toString();
+				} else {
+					usuario = new UsuarioDTO();
+					nombre = "";
+					apellido = "";
+					mail = "";
+					nombreUsuario = "";
+					documento = "";
+					domicilio = "";
+					telefono = "";
+					//ciudad = "";
+					//departamento = "";
+					ocupacion = "";
+					contrasena = ""; 
+					//tipoUsuario = "";
 				}
-				nombre = usuario.getNombre();
-				apellido = usuario.getApellido();
-				mail = usuario.getMail();
-				contrasena = usuario.getContrasena().toString();
-				tipoUsuario = usuario.getTipo().toString();
 				
-			} else {
-				usuario = new UsuarioDTO();
-				nombre = "";
-				apellido = "";
-				mail = "";
-				nombreUsuario = "";
-				documento = "";
-				domicilio = "";
-				telefono = "";
-				//ciudad = "";
-				//departamento = "";
-				ocupacion = "";
-				contrasena = ""; 
-				//tipoUsuario = "";
-			}
-			if (modalidad.contentEquals("update")) {
-				modoEdicion = false;
-			}else if (modalidad.contentEquals("insert")) {
-				modoEdicion = false;
-			}else {
-				//modoEdicion = true;
-				modalidad="insert";
-			}
+				if (modalidad != null && modalidad.contentEquals("update")) {
+					modoEdicion = true;
+				}else if (modalidad != null && modalidad.contentEquals("insert")) {
+					modoEdicion = false;
+				}else {
+					modoEdicion = false;
+					modalidad="insert";
+				}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -237,28 +239,36 @@ public class GestionUsuarios implements Serializable{
 				this.modalidad="view";
 		
 			}
-
-			if(id == null) {
-				beanu.crear(usuarioNuevo);
-				this.modalidad = "insert";
+			if(!this.ciUnica(documento, tipoUsuario)) {
+				if(id == null) {
+					beanu.crear(usuarioNuevo);
+					this.modalidad = "insert";
+					
+					//mensaje de actualizacion correcta
+					FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se ha agregado un nuevo Usuario de tipo " + usuarioNuevo.getTipo().toString(), "");
+					FacesContext.getCurrentInstance().addMessage(null, facesMsg);
+					
+					return "menuUsuarios";
+				} else {
+					usuarioNuevo.setId(usuario.getId());
+					this.modalidad="update";
+					
+					FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se ha modificado el Usuario " + usuarioNuevo.getUsuario(), "");
+					FacesContext.getCurrentInstance().addMessage(null, facesMsg);
+					
+					beanu.modificar(usuarioNuevo);
+					return "menuUsuarios";
+				}
+			}
+			else {
 				
-				//mensaje de actualizacion correcta
-				FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se ha agregado un nuevo Usuario de tipo " + usuarioNuevo.getTipo().toString(), "");
-				FacesContext.getCurrentInstance().addMessage(null, facesMsg);
-				
-				return "menuUsuarios";
-			} else {
-				usuarioNuevo.setId(usuario.getId());
-				this.modalidad="update";
-				
-				FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se ha modificado el Usuario " + usuarioNuevo.getUsuario(), "");
-				FacesContext.getCurrentInstance().addMessage(null, facesMsg);
-				
-				beanu.modificar(usuarioNuevo);
-				return "menuUsuarios";
+				return null;
 			}
 	
 		} catch (Exception e) {
+			String err = e.getStackTrace().toString();
+			System.out.println(err);
+			//UK_ID4M30MLFEDQ4C603YSUADM8L
 			e.printStackTrace();
 			return null;
 		}
@@ -288,7 +298,22 @@ public class GestionUsuarios implements Serializable{
 			return "";
 		}
 	}
-		
+
+	public boolean ciUnica (String documento, String tipoUsuario) {
+		boolean flag = false;
+		flag = beanu.buscarDocument(Integer.parseInt(documento), tipoUsuario);
+		if(flag) {
+			System.out.println("CEDULA EXISTE");
+			String message = "The DOCUMENTO has been registered, Please use another one. Thanks.";
+	        FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_ERROR, message, 
+	                                         "Registration unsuccessful");
+	        
+	        FacesContext.getCurrentInstance().addMessage(null, m);
+			return flag;
+		}
+		return flag;
+	}
+	
 	public static boolean chequearTelefono(String telefono) {
 	    return telefono.matches("[0-9]+");
 	}		

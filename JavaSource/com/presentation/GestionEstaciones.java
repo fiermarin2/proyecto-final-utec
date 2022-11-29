@@ -48,7 +48,7 @@ public class GestionEstaciones implements Serializable{
 	private Usuario usuario;
 	private String nombre;
 	private String modalidad;
-	private boolean modoEdicion=false;
+	private boolean modoEdicion = false;
 	
 	@PostConstruct
 	public void init() throws ServiciosException{
@@ -105,9 +105,12 @@ public class GestionEstaciones implements Serializable{
 				longitud =  null;
 				departamento = null;
 			}
-			if (modalidad.contentEquals("update")) {
-			}else if (modalidad.contentEquals("insert")) {
+			if (modalidad != null && modalidad.contentEquals("update")) {
+				modoEdicion = true;
+			}else if (modalidad != null && modalidad.contentEquals("insert")) {
+				modoEdicion = false;
 			}else {
+				modoEdicion = false;
 				modalidad="insert";
 			}
 		} catch (Exception e) {
@@ -140,11 +143,11 @@ public class GestionEstaciones implements Serializable{
 			estacionNuevo.setNombre_de_usuario(userName);
 			estacionNuevo.setDepartamento(departamentoBean.buscar(idDepartamento));
 			
-			this.modalidad="view";
+			//this.modalidad="view";
 
 			if(estacion.getId() == null) {
-				beanf.crearEstacion(estacionNuevo);
 				this.modalidad = "insert";
+				beanf.crearEstacion(estacionNuevo);
 				
 				//mensaje de actualizacion correcta
 				FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se ha agregado un nueva estacion: " + estacionNuevo.getNombre(), "");

@@ -100,14 +100,13 @@ public class UsuarioDAO {
 	}
 	
 	public Investigador findInvestigadorByDocument(int documento, int borrado) /*throws ServiciosException*/{
-		try {										
-			TypedQuery<Investigador> query = em
-					//.createQuery("SELECT u FROM Usuario u WHERE u.nombreUsuario = :nombreUsuario and u.borrado = 0",Usuario.class)
-					.createNamedQuery("Investigador.findDocument",Investigador.class)
-					.setParameter("documento", documento)
-					.setParameter("borrado", borrado)
-					;			
-			return query.getSingleResult();
+		try {
+				TypedQuery<Investigador> query = em.createNamedQuery("Investigador.findDocument",Investigador.class)
+						.setParameter("documento", documento)
+						.setParameter("borrado", borrado)
+						;
+						return query.getSingleResult();
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -123,7 +122,7 @@ public class UsuarioDAO {
 					.setParameter("documento", documento)
 					.setParameter("borrado", borrado)
 					;			
-			return query.getSingleResult();
+			return (Administrador) query.getSingleResult();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null; 
@@ -172,22 +171,6 @@ public class UsuarioDAO {
 			//throw new ServiciosException("NO EXISTEN REGISTROS");
 		}*/
 	}
-	
-	/*
-	public Administrador findDocument(String documento) {
-		try {										
-			TypedQuery<Administrador> query = em
-					//.createQuery("SELECT u FROM Usuario u WHERE u.nombreUsuario = :nombreUsuario and u.borrado = 0",Usuario.class)
-					.createQuery("SELECT u FROM Administrador u WHERE u.nombreUsuario = :nombreUsuario AND u.borrado = 0",Administrador.class)
-					.setParameter("documento", documento)
-					;			
-			return query.getSingleResult();
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-			//throw new ServiciosException("NO EXISTEN REGISTROS");
-		}
-	}*/
 
 	public Usuario obtenerLogIn(String usuario, char[] contrasenia) throws ServiciosException {
 		try {

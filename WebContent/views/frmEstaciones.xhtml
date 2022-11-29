@@ -35,7 +35,9 @@
 										<label class="control-label">Nombre</label>
 									</div>
                                     <div class="col-sm-6">
-                                    	<input class="form-control" placeholder="Nombre" type="text" jsf:id="nombre" name="nombre" value="#{gestionEstaciones.estacion.nombre}"/>
+                                    	<input class="form-control" placeholder="Nombre" type="text" jsf:id="nombre" name="nombre" value="#{gestionEstaciones.estacion.nombre}">
+                                   			<f:validator validatorId = "com.exceptions.OnlyCharacters"/>
+                                   		</input>
                                     	<p:message for="nombre" style="color:red" />
                                    	</div>
 								</div>
@@ -45,7 +47,9 @@
 										<label class="control-label">Calidad agua</label>
 									</div>
                                     <div class="col-sm-6">
-                                    	<input class="form-control" placeholder="Calidad del agua" type="text" jsf:id="calidadAgua" name="calidadAgua" value="#{gestionEstaciones.estacion.calidad_agua}"/>
+                                    	<input class="form-control" placeholder="Calidad del agua" type="text" jsf:id="calidadAgua" name="calidadAgua" value="#{gestionEstaciones.estacion.calidad_agua}">
+                                   			<f:validator validatorId = "com.exceptions.OnlyCharacters"/>
+                                   		</input>
                                     	<p:message for="calidadAgua" style="color:red" />
                                    	</div>
 								</div>
@@ -65,7 +69,9 @@
 										<label class="control-label">Latitud</label>
 									</div>
                                     <div class="col-sm-6">
-                                    	<input class="form-control" placeholder="Latitud" type="number" jsf:id="latitud" name="latitud" value="#{gestionEstaciones.estacion.latitud}"/>
+                                    	<input class="form-control" placeholder="Latitud" type="text" jsf:id="latitud" name="latitud" value="#{gestionEstaciones.estacion.latitud}">
+<!--                                    			<f:validator validatorId = "com.exceptions.OnlyRealNumbers"/> -->
+                                   		</input>
                                     	<p:message for="latitud" style="color:red" />
                                    	</div>
 								</div>
@@ -75,7 +81,9 @@
 										<label class="control-label">Longitud</label>
 									</div>
                                     <div class="col-sm-6">
-                                    	<input type="number" class="form-control" placeholder="Longitud" jsf:id="longitud" name="longitud" value="#{gestionEstaciones.estacion.longitud}"/>
+                                    	<input  class="form-control" placeholder="Longitud" type="text" jsf:id="longitud" name="longitud" value="#{gestionEstaciones.estacion.longitud}">
+<!--                                    			<f:validator validatorId = "com.exceptions.OnlyRealNumbers"/> -->
+                                   		</input>
                                         <p:message for="longitud" style="color:red" />
                                    	</div>
 								</div>
@@ -98,11 +106,21 @@
                                 <div class="form-group">
                                     <div class="col-sm-4 col-sm-offset-2">
                                         <a class="btn btn-white" href="menuEstaciones.xhtml"> Cancelar</a>
-                                        <h:commandButton value="Guardar" rendered="#{!gestionEstaciones.modoEdicion}" 
-											update=":form" action="#{gestionEstaciones.insertEstacion()}" class="btn btn-primary">
-										    	<f:param name="id" value="${gestionEstaciones.id}" />
-								    			<f:param name="modalidad" value="update" />
-										</h:commandButton>
+                                         <c:choose>
+										    <c:when test="#{gestionUsuarios.modoEdicion}">
+		                                        <h:commandButton value="Guardar" rendered="#{!gestionEstaciones.modoEdicion}" 
+													update=":form" action="#{gestionEstaciones.insertEstacion()}" class="btn btn-primary">
+												    	<f:param name="id" value="${gestionEstaciones.id}" />
+										    			<f:param name="modalidad" value="update" />
+												</h:commandButton>
+											</c:when>
+											<c:otherwise>
+												<h:commandButton value="Guardar" rendered="#{!gestionEstaciones.modoEdicion}" 
+													update=":form" action="#{gestionEstaciones.insertEstacion()}" class="btn btn-primary">
+										    			<f:param name="modalidad" value="insert" />
+												</h:commandButton>
+											</c:otherwise>
+										</c:choose>
                                     </div>
                                 </div>
 							</form>

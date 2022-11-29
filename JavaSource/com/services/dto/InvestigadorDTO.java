@@ -2,6 +2,8 @@ package com.services.dto;
 
 import java.util.HashMap;
 
+import javax.validation.constraints.NotNull;
+
 import com.entities.TipoUsuario;
 
 public class InvestigadorDTO extends UsuarioDTO
@@ -10,7 +12,9 @@ public class InvestigadorDTO extends UsuarioDTO
 	 *
 	 */
 	private static final long serialVersionUID = 1L;
+	@NotNull
 	private int documento;
+	
 	private String domicilio;
 	private int telefono;
 	private CiudadDTO ciudad;
