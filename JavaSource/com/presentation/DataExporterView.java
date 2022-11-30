@@ -39,26 +39,45 @@ public class DataExporterView implements Serializable {
     	TextExporter textExporter = new TextExporter();
     }
 
-    public void exportar() {
+    public void prueba() {
     	try {
-    		File file = new File("medicion.xlsx");
+    		File file = new File("TestData.xlsx");
             InputStream is = new FileInputStream(file);
     		// workbook object
             XSSFWorkbook workbook = new XSSFWorkbook(is);
       
             // spreadsheet object
             XSSFSheet spreadsheet
-                = workbook.createSheet(" Dato de Medicion ");
+                = workbook.createSheet(" Student Data ");
       
             // creating a row object
             XSSFRow row;
       
             // This data needs to be written (Object[])
-            Map<String, Object[]> medicionData
+            Map<String, Object[]> studentData
                 = new TreeMap<String, Object[]>();
       
-
-            Set<String> keyid = medicionData.keySet();
+            studentData.put(
+                "1",
+                new Object[] { "Roll No", "NAME", "Year" });
+      
+            studentData.put("2", new Object[] { "128", "Aditya",
+                                                "2nd year" });
+      
+            studentData.put(
+                "3",
+                new Object[] { "129", "Narayana", "2nd year" });
+      
+            studentData.put("4", new Object[] { "130", "Mohan",
+                                                "2nd year" });
+      
+            studentData.put("5", new Object[] { "131", "Radha",
+                                                "2nd year" });
+      
+            studentData.put("6", new Object[] { "132", "Gopal",
+                                                "2nd year" });
+      
+            Set<String> keyid = studentData.keySet();
       
             int rowid = 0;
       
@@ -67,7 +86,7 @@ public class DataExporterView implements Serializable {
             for (String key : keyid) {
       
                 row = spreadsheet.createRow(rowid++);
-                Object[] objectArr = medicionData.get(key);
+                Object[] objectArr = studentData.get(key);
                 int cellid = 0;
       
                 for (Object obj : objectArr) {
@@ -80,7 +99,7 @@ public class DataExporterView implements Serializable {
             // writing the workbook into the file...
             
             FileOutputStream out = new FileOutputStream(
-                new File("medicion.xlsx"));
+                new File("GFGsheet.xlsx"));
       
             workbook.write(out);
             out.close();
@@ -88,10 +107,6 @@ public class DataExporterView implements Serializable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    }
-    
-    public void importar() {
-    	System.out.print("hello");
     }
     
     public Exporter<DataTable> getTextExporter() {

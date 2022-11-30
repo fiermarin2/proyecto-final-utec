@@ -22,15 +22,6 @@ public class AdministradorDTO extends UsuarioDTO {
 
 	public AdministradorDTO() {
 		setTipo(TipoUsuario.ADMINISTRADOR);
-	
-		Map<String,String> permisos = new LinkedHashMap<String,String>();
-		permisos.put("Usuarios", 		"eCRUD");
-		permisos.put("Formularios", 	"eCRUD");
-		permisos.put("Casillas", 		"eCRUD");
-		permisos.put("Estaciones", 		"eCRUD");
-		permisos.put("Registros CA",   "ieCRUD");
-		setPermisos(permisos);
-
 	}
 
 	public int getDocumento() {

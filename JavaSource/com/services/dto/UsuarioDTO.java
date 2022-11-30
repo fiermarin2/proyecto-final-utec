@@ -36,7 +36,6 @@ public class UsuarioDTO  implements Serializable{
 	private char[] contrasena;
 	
 	private TipoUsuario tipo;
-	private Map<String,String> permisos;
 
 	public UsuarioDTO() {
 		
@@ -102,14 +101,6 @@ public class UsuarioDTO  implements Serializable{
 	public String getIniciales() {
 		return String.valueOf(Character.toUpperCase(getNombre().toCharArray()[0]))
 		     + String.valueOf(Character.toUpperCase(getApellido().toCharArray()[0]));
-	}
-	
-	protected void setPermisos(Map<String, String> permisos) {
-		this.permisos = permisos;
-	}
-	
-	public Map<String, String> getPermisos(){
-		return permisos;
 	}
 
 	@Override

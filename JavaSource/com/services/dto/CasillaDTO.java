@@ -33,7 +33,7 @@ public class CasillaDTO implements Serializable{
 	
 	private String usuario;
 	private String descripcion;
-
+	private String valor;
 	
 	public Long getId() {
 		return id;
@@ -87,6 +87,12 @@ public class CasillaDTO implements Serializable{
 	@Override
 	public String toString() {
 		return tipo;
+	}
+	public String getValor() {
+		return valor;
+	}
+	public void setValor(String valor) {
+		this.valor = valor;
 	}
 
 }

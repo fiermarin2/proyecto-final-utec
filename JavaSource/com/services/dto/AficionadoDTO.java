@@ -14,10 +14,6 @@ public class AficionadoDTO extends UsuarioDTO
 
 	public AficionadoDTO() {
 		setTipo(TipoUsuario.AFICIONADO);
-		
-		HashMap<String,String> permisos = new HashMap<String, String>();
-		permisos.put("Registros CA", 	"CRU");
-		setPermisos(permisos);
 	}
 
 	public String getOcupacion() {

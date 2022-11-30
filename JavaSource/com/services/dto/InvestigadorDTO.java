@@ -21,13 +21,6 @@ public class InvestigadorDTO extends UsuarioDTO
 
 	public InvestigadorDTO() {
 		setTipo(TipoUsuario.INVESTIGADOR);
-		
-		HashMap<String,String> permisos = new HashMap<String,String>();
-		permisos.put("Formularios", 	"eCRUD");
-		permisos.put("Casillas", 		"eCRD");
-		permisos.put("Estaciones", 		"eCRUD");
-		permisos.put("Registros CA", 	"ieCRUD");
-		setPermisos(permisos);
 	}
 
 	public int getDocumento() {
