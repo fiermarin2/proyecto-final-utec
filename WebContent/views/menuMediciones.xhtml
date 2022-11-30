@@ -15,14 +15,12 @@
 		            	<div class="ibox-title">
 		                    <h5>Lista de mediciones</h5>
 		                </div>
-<<<<<<< HEAD
+
 		                <div class="ibox-content">	 
 		                
 						    <form jsf:id="departamentos" enctype="multipart/form-data">
-=======
-		                <div class="ibox-content">	                    
-						    <form jsf:id="departamentos">
->>>>>>> parent of f7149d6 (exportar excel)
+
+
 			                    <div class="table-responsive">
 			                    	<p:dataTable var="medicion" widgetVar="dtMediciones" value="#{gestionMediciones.listar()}" rowKey="#{medicion.id}" reflow="true" styleClass="products-table">
 				                    	<f:facet name="header">
@@ -35,7 +33,7 @@
 													</h:link>
 							                    </span>
 							                </div>
-<<<<<<< HEAD
+
 							                <br/>
 							               	<div class="input-group">
 							               		<h:outputLabel value="Importar medición " />
@@ -43,8 +41,6 @@
 											        <p:ajax listener="#{gestionMediciones.importar()}" />
 											    </h:inputFile>
 							               </div>
-=======
->>>>>>> parent of f7149d6 (exportar excel)
 							            </f:facet>
 			                    		<p:column style="width:2rem">
 							                <p:rowToggler/>
