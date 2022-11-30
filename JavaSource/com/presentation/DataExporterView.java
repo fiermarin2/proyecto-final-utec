@@ -17,11 +17,7 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -90,8 +86,9 @@ public class DataExporterView implements Serializable {
                 int cellid = 0;
       
                 for (Object obj : objectArr) {
-                    Cell cell = row.createCell(cellid++);
-                    cell.setCellValue((String)obj);
+                    XSSFCell cell = row.createCell(cellid++);
+                    cell.setCellValue((String) obj);
+                    
                 }
             }
       
