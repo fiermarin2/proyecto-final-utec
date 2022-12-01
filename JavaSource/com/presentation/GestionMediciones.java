@@ -72,25 +72,25 @@ public class GestionMediciones implements Serializable{
 		//formulario = new FormularioDTO();
 
 		casillas = new ArrayList<>();
-		if(formulario!=null) {
-			if(formulario.getCasillas().size()>0) {
-				for(CasillaDTO c: formulario.getCasillas()) {
-					c.setValor("");
-				}
-			}
-		}
+		
 	}
 	
-//	public void preRenderView() {
-//		try {
-//
-//
-//		
-//			
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//	}
+	public void preRenderView() {
+		try {
+
+			if(formulario!=null) {
+				if(formulario.getCasillas().size()>0) {
+					for(CasillaDTO c: formulario.getCasillas()) {
+						c.setValor("");
+					}
+				}
+			}
+		
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	
 	public List<RegistroDTO> listar() {
 		try {
