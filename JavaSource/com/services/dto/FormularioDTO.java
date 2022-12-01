@@ -22,7 +22,15 @@ public class FormularioDTO implements Serializable {
 	private UsuarioDTO usuario;
 	private ArrayList<CasillaDTO> casillas;
 	//private Map<String, CasillaDTO> casillas = new LinkedHashMap<>();
+	private String fecha;
 	
+	
+	public String getFecha() {
+		return fecha;
+	}
+	public void setFecha(String fecha) {
+		this.fecha = fecha;
+	}
 	public Long getId() {
 		return id;
 	}

@@ -48,7 +48,7 @@ public class GestionFormulario implements Serializable{
 	private boolean modoEdicion = false;
 	
 	@PostConstruct
-	public void init(){
+	public void init() throws ServiciosException{
 		listaFormularios = listar();
 		formulario = new FormularioDTO();
 		chequeoUsuario();
@@ -109,14 +109,14 @@ public class GestionFormulario implements Serializable{
 	}
 	
 	//trae listado de formularios..
-	public List<FormularioDTO> listar() {
+	public List<FormularioDTO> listar() throws ServiciosException {
 		listaFormularios = beanf.obtenerTodos();
 
 		return listaFormularios;
 	}
 
 	//trae listado de formularios y casillas..
-	public List<FormularioDTO> listarCasillas() {
+	public List<FormularioDTO> listarCasillas() throws ServiciosException {
 		listaFormularios = beanf.obtenerTodos();
 
 		return listaFormularios;

@@ -133,15 +133,14 @@ public class FormulariosBean {
 		}
 	}
 
-	public List<FormularioDTO> obtenerTodos(){
+	public List<FormularioDTO> obtenerTodos() throws ServiciosException {
 		try {
 			List<FormularioDTO> listaFrm = new ArrayList<>();
 			for(Formulario f: daof.findAll())
 				listaFrm.add(this.mapInverso(f));
 			return listaFrm;
-		} catch (ServiciosException e) {
-			e.printStackTrace();
-			return null;
+		} catch (Exception e) {
+			throw new ServiciosException("error al listar");
 		}
 	}
 

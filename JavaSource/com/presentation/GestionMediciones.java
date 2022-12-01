@@ -183,7 +183,7 @@ public class GestionMediciones implements Serializable{
 		file.write(archivito);
 		
 		try {
-			InputStream inputstream = new FileInputStream(new File("C:\\wildfly-20.0.1\\standalone\\tmp\\PIP.war\\"+archivito));
+			InputStream inputstream = new FileInputStream(new File("E:\\wildfly-20.0.1.Final\\standalone\\tmp\\PIP.war\\"+archivito));
 			XSSFWorkbook workbook = new XSSFWorkbook(inputstream);
 			XSSFSheet sheet = workbook.getSheetAt(0); //esto elige la hoja 1 del excel.
 			

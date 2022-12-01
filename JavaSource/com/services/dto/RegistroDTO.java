@@ -15,7 +15,8 @@ public class RegistroDTO implements Serializable{
 	@SuppressWarnings("unused")
 	private DepartamentoDTO departamento;      //1
 	private UsuarioDTO usuario;
-
+	private String fecha;
+	
 	public Long getId() {
 		return id;
 	}
@@ -51,6 +52,14 @@ public class RegistroDTO implements Serializable{
 */
 	public Map<String, String> getValor() {
 		return valor;
+	}
+
+	public String getFecha() {
+		return fecha;
+	}
+
+	public void setFecha(String fecha) {
+		this.fecha = fecha;
 	}
 
 	public void setValor(Map<String, String> valor) {

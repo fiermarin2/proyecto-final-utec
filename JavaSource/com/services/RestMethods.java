@@ -1,7 +1,10 @@
 package com.services;
 
 import java.io.CharArrayReader;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -86,7 +89,12 @@ public class RestMethods {
 		 ArrayList<RegistroDTO> listaMediciones = new ArrayList<>(); 
 		 try {
 			  long id = Long.parseLong(userId);
-			  listaMediciones = (ArrayList<RegistroDTO>) registroBean.obtenerTodos(userBean.buscar(id)); 
+			  listaMediciones = (ArrayList<RegistroDTO>) registroBean.obtenerTodos(userBean.buscar(id));
+			  for(RegistroDTO r: listaMediciones) {
+				  r.setFecha(r.getFecha_Hora().toString());
+				  r.getUsuario().setContrasena(null);
+				  r.getFormulario().getUsuario().setContrasena(null);
+			  }
 			  return listaMediciones;
 		 } catch (ServiciosException e) {
 			 e.printStackTrace();
@@ -98,9 +106,14 @@ public class RestMethods {
 	@Path("forms")
 	@Produces("application/json")
 	public ArrayList<FormularioDTO> listarForms() {
-		ArrayList<FormularioDTO> lista = new ArrayList<FormularioDTO>();
+		ArrayList<FormularioDTO> lista = new ArrayList<>();
 		try {
 			lista = (ArrayList<FormularioDTO>) formBean.obtenerTodos();
+			for(FormularioDTO f: lista) {
+				f.getUsuario().setContrasena(null);
+				f.setFecha(f.getFecha_hora().toString());
+			}
+			
 			return lista;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -115,6 +128,7 @@ public class RestMethods {
 		FormularioDTO form = new FormularioDTO();
 		try {
 			form = formBean.buscar(Long.parseLong(formId));
+			form.getUsuario().setContrasena(null);
 			return form;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -143,6 +157,7 @@ public class RestMethods {
 		FormularioDTO form = new FormularioDTO();
 		try {
 			form = formBean.obtenerFormulario(formNombre);
+			form.getUsuario().setContrasena(null);
 			return form;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -157,7 +172,7 @@ public class RestMethods {
 		try {
 			return regBean.crear(dto);
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println("ERROR " + e.getMessage());
 			return null;
 		}
 	}
@@ -190,7 +205,13 @@ public class RestMethods {
 	public List<RegistroDTO> medicionesPorFormulario(@PathParam(value = "nombreFormulario") String nombreFormulario) {
 		try {
 			FormularioDTO form = formBean.obtenerFormulario(nombreFormulario);
-			return regBean.obtenerPorFormulario(form.getId());
+			List<RegistroDTO> registros = regBean.obtenerPorFormulario(form.getId());
+			for(RegistroDTO r: registros) {
+				r.setFecha(r.getFecha_Hora().toString());
+				r.getUsuario().setContrasena(null);
+				r.getFormulario().getUsuario().setContrasena(null);
+			}
+			return registros;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
