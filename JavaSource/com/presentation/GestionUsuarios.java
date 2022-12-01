@@ -239,32 +239,25 @@ public class GestionUsuarios implements Serializable{
 				this.modalidad="view";
 		
 			}
-			if(!this.ciUnica(documento, tipoUsuario)) {
-				if(id == null) {
-					beanu.crear(usuarioNuevo);
-					this.modalidad = "insert";
-					
-					//mensaje de actualizacion correcta
-					FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se ha agregado un nuevo Usuario de tipo " + usuarioNuevo.getTipo().toString(), "");
-					FacesContext.getCurrentInstance().addMessage(null, facesMsg);
-					
-					return "menuUsuarios";
-				} else {
-					usuarioNuevo.setId(usuario.getId());
-					this.modalidad="update";
-					
-					FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se ha modificado el Usuario " + usuarioNuevo.getUsuario(), "");
-					FacesContext.getCurrentInstance().addMessage(null, facesMsg);
-					
-					beanu.modificar(usuarioNuevo);
-					return "menuUsuarios";
-				}
-			}
-			else {
+			if(id == null) {
+				beanu.crear(usuarioNuevo);
+				this.modalidad = "insert";
 				
-				return null;
-			}
-	
+				//mensaje de actualizacion correcta
+				FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se ha agregado un nuevo Usuario de tipo " + usuarioNuevo.getTipo().toString(), "");
+				FacesContext.getCurrentInstance().addMessage(null, facesMsg);
+				
+				return "menuUsuarios";
+			} else {
+				usuarioNuevo.setId(usuario.getId());
+				this.modalidad="update";
+				
+				FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se ha modificado el Usuario " + usuarioNuevo.getUsuario(), "");
+				FacesContext.getCurrentInstance().addMessage(null, facesMsg);
+				
+				beanu.modificar(usuarioNuevo);
+				return "menuUsuarios";
+			}	
 		} catch (Exception e) {
 			String err = e.getStackTrace().toString();
 			System.out.println(err);
@@ -297,21 +290,6 @@ public class GestionUsuarios implements Serializable{
 			e.printStackTrace();
 			return "";
 		}
-	}
-
-	public boolean ciUnica (String documento, String tipoUsuario) {
-		boolean flag = false;
-		flag = beanu.buscarDocument(Integer.parseInt(documento), tipoUsuario);
-		if(flag) {
-			System.out.println("CEDULA EXISTE");
-			String message = "The DOCUMENTO has been registered, Please use another one. Thanks.";
-	        FacesMessage m = new FacesMessage(FacesMessage.SEVERITY_ERROR, message, 
-	                                         "Registration unsuccessful");
-	        
-	        FacesContext.getCurrentInstance().addMessage(null, m);
-			return flag;
-		}
-		return flag;
 	}
 	
 	public static boolean chequearTelefono(String telefono) {

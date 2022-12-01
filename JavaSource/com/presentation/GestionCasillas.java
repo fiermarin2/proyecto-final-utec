@@ -29,7 +29,6 @@ import org.hibernate.validator.constraints.UniqueElements;
 @SessionScoped
 public class GestionCasillas implements Serializable{	
 	private static final long serialVersionUID = 1L;
-	
 	@Inject
 	private CasillasBean beanc;
 	private CasillaDTO casilla;
@@ -38,19 +37,13 @@ public class GestionCasillas implements Serializable{
 	private UsuariosBean userBean;
 	private UsuarioDTO user;
 	private Long id;
-	
-
 	private String nombre;
-	
 	private String tipo;
-	
 	private String ubicacion;
 	private String obligatoria;
 	private String unidadMedida;
 	private String descripcion;
-	
 	private String modalidad;
-	
 	
 	@PostConstruct
 	public void init(){
@@ -143,25 +136,25 @@ public class GestionCasillas implements Serializable{
 				nombre = casilla.getNombre();
 				
 				String userName = (String) ses.getAttribute("username");
-					casillaNueva.setNombre(casilla.getNombre());
-					casillaNueva.setDescripcion(casilla.getDescripcion());
-					casillaNueva.setTipo(casilla.getTipo());
-					casillaNueva.setUbicacion(casilla.getUbicacion());
-					casillaNueva.setUnidad_de_medida(casilla.getUnidad_de_medida());
-					casillaNueva.setObligatoria(casilla.getObligatoria());
-					
-					casillaNueva.setUsuario(userName);
-					
-					this.modalidad="view";
+				casillaNueva.setNombre(casilla.getNombre());
+				casillaNueva.setDescripcion(casilla.getDescripcion());
+				casillaNueva.setTipo(casilla.getTipo());
+				casillaNueva.setUbicacion(casilla.getUbicacion());
+				casillaNueva.setUnidad_de_medida(casilla.getUnidad_de_medida());
+				casillaNueva.setObligatoria(casilla.getObligatoria());
+				
+				casillaNueva.setUsuario(userName);
+				
+				this.modalidad="view";
 
-					beanc.crear(casillaNueva);
-					this.modalidad = "insert";
+				beanc.crear(casillaNueva);
+				this.modalidad = "insert";
+				
+				//mensaje de actualizacion correcta
+				FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se ha agregado un nuevo casilla: " + casillaNueva.getNombre(), "");
+				FacesContext.getCurrentInstance().addMessage(null, facesMsg);
 					
-					//mensaje de actualizacion correcta
-					FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se ha agregado un nuevo casilla: " + casillaNueva.getNombre(), "");
-					FacesContext.getCurrentInstance().addMessage(null, facesMsg);
-						
-					return "menuCasillas.xhtml?faces-redirect=true";
+				return "menuCasillas.xhtml?faces-redirect=true";
 			}
 			
 			else {

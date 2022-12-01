@@ -15,16 +15,10 @@ public class CasillaDTO implements Serializable{
 	@Length(min=3, max=30 ,message = "El nombre debe tener entre 3 y 30 caracteres")
 	private String nombre;
 	
-	@NotNull(message = "El campo tipo no puede ser nulo")
-	@Length(min=3, max=30 ,message = "El campo tipo debe tener entre 3 y 30 caracteres")
 	private String tipo;
 	
-	@NotNull(message = "El campo ubicacion no puede ser nulo")
-	@Length(min=3, max=30 ,message = "El campo ubicacion debe tener entre 3 y 30 caracteres")
 	private String ubicacion;
 	
-	@NotNull(message = "El campo obligatoria no puede ser nulo")
-	@Length(min=3, max=30 ,message = "El campo obligatoria debe tener entre 3 y 30 caracteres")
 	private boolean obligatoria;
 	
 	@NotNull(message = "El campo unidad de medida no puede ser nulo")

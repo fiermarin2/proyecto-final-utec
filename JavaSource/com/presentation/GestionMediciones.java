@@ -183,7 +183,8 @@ public class GestionMediciones implements Serializable{
 		file.write(archivito);
 		
 		try {
-			InputStream inputstream = new FileInputStream(new File("E:\\wildfly-20.0.1.Final\\standalone\\tmp\\PIP.war\\"+archivito));
+			//InputStream inputstream = new FileInputStream(new File("E:\\wildfly-20.0.1.Final\\standalone\\tmp\\PIP.war\\"+archivito));
+			InputStream inputstream = new FileInputStream(new File("/opt/wildfly/standalone/tmp/PIP.war/"+archivito));
 			XSSFWorkbook workbook = new XSSFWorkbook(inputstream);
 			XSSFSheet sheet = workbook.getSheetAt(0); //esto elige la hoja 1 del excel.
 			
@@ -238,48 +239,47 @@ public class GestionMediciones implements Serializable{
 	}
 	
 	//AGREGAR REGISTRO..
-		private String crearModificar(String formulario, String estacion, Map<String,String> valor) {
-			HttpSession ses = ( HttpSession ) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
-			Long userId = (Long) ses.getAttribute("id");
-			
-			RegistroDTO newRegistro = new RegistroDTO();
-			
-			Map<String, String> mapCasillas = new HashMap<>();
-			
-			if (estacion == null) return "Debe seleccionar una ESTACIÓN para poder continuar";
-			
-			if(estacion != null && formulario != null) {
-				try {
-					FormularioDTO formularioDTO = formularioBean.obtenerFormulario(formulario);
-					
-					newRegistro.setDepartamento(estacionBean.obtenerPorNombre(estacion).getDepartamento());
-					newRegistro.setEstacion(estacionBean.obtenerPorNombre(estacion));
-					newRegistro.setFormulario(formularioDTO);
-					newRegistro.setUsuario(userBean.buscar(userId));
-					
-					Map<String,String> valores = new HashMap<>();
-					
-					/*for(CasillaDTO c: formularioDTO.getCasillas()) {
-						valores.put(c.getNombre(), c.getValor());
-					}
-					
-					for(CasillaDTO c: formularioDTO.getCasillas()) {
-						mapCasillas.put(c.getNombre(), null);
-					}*/
+	private String crearModificar(String formulario, String estacion, Map<String,String> valor) {
+		HttpSession ses = ( HttpSession ) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
+		Long userId = (Long) ses.getAttribute("id");
+		
+		RegistroDTO newRegistro = new RegistroDTO();
+		
+		Map<String, String> mapCasillas = new HashMap<>();
+		
+		if (estacion == null) return "Debe seleccionar una ESTACIÓN para poder continuar";
+		
+		if(estacion != null && formulario != null) {
+			try {
+				FormularioDTO formularioDTO = formularioBean.obtenerFormulario(formulario);
 				
-					newRegistro.setValor(valor);
-					
-					registroBean.crear(newRegistro);
-					
-					return "menuMediciones.xhtml?faces-redirect=true";
-				}catch(Exception error) {
-					System.out.println("ERROR");
+				newRegistro.setDepartamento(estacionBean.obtenerPorNombre(estacion).getDepartamento());
+				newRegistro.setEstacion(estacionBean.obtenerPorNombre(estacion));
+				newRegistro.setFormulario(formularioDTO);
+				newRegistro.setUsuario(userBean.buscar(userId));
+				
+				Map<String,String> valores = new HashMap<>();
+				
+				/*for(CasillaDTO c: formularioDTO.getCasillas()) {
+					valores.put(c.getNombre(), c.getValor());
 				}
-					
+				
+				for(CasillaDTO c: formularioDTO.getCasillas()) {
+					mapCasillas.put(c.getNombre(), null);
+				}*/
+			
+				newRegistro.setValor(valor);
+				
+				registroBean.crear(newRegistro);
+				
+				return "menuMediciones.xhtml?faces-redirect=true";
+			}catch(Exception error) {
+				System.out.println("ERROR");
 			}
-			return null;
-
+				
 		}
+		return null;
+	}
 	
 	public FormularioDTO getFormulario() {
 		return formulario;

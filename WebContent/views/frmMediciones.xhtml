@@ -23,6 +23,9 @@
 	                        </div>
 	                    </div>
 	                    <div class="ibox-content">
+	                    	<f:metadata>
+							    <f:event type="preRenderView" listener="#{gestionMediciones.preRenderView}"/>
+							</f:metadata>
 							<form jsf:id="medicion" class="form-horizontal">
 								<div class="row">
 									<div class="col-sm-1 pt-2">
@@ -60,7 +63,7 @@
 												<label class="control-label">#{casilla.nombre}</label>
 											</div>
 		                                    <div class="col-sm-6">
-		                                    	<input class="form-control" placeholder="#{casilla.unidad_de_medida}" type="text" jsf:id="#{casilla.id}" name="nombre" value="#{casilla.usuario}" required="#{casilla.obligatoria ? 'true' : 'false'}"/>
+		                                    	<input class="form-control" placeholder="#{casilla.unidad_de_medida}" type="text" jsf:id="#{casilla.id}" name="nombre" value="#{casilla.valor}" required="#{casilla.obligatoria ? 'true' : 'false'}"/>
 		                                   	</div>
 										</div>
 		                    		</p:repeat>
