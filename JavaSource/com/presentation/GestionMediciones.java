@@ -5,8 +5,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,26 +15,18 @@ import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.context.Flash;
-import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
-import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
 
-import com.entities.Casilla;
 import com.exceptions.ServiciosException;
-import com.services.CasillasBean;
 import com.services.EstacionesBean;
 import com.services.FormulariosBean;
 import com.services.RegistrosBean;
 import com.services.UsuariosBean;
 import com.services.dto.CasillaDTO;
-import com.services.dto.EstacionDTO;
+
 import com.services.dto.FormularioDTO;
 import com.services.dto.RegistroDTO;
 
@@ -45,8 +35,6 @@ import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.primefaces.event.FileUploadEvent;
-import org.primefaces.event.SelectEvent;
 import org.primefaces.model.file.UploadedFile;
 
 
@@ -80,24 +68,29 @@ public class GestionMediciones implements Serializable{
 	
 	@PostConstruct
 	public void init(){
-		listaMediciones = listar();
-		formulario = new FormularioDTO();
+		//listaMediciones = listar();
+		//formulario = new FormularioDTO();
 
 		casillas = new ArrayList<>();
-	}
-	
-	public void preRenderView() {
-		try {
+		if(formulario!=null) {
 			if(formulario.getCasillas().size()>0) {
 				for(CasillaDTO c: formulario.getCasillas()) {
 					c.setValor("");
 				}
 			}
-			
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
 	}
+	
+//	public void preRenderView() {
+//		try {
+//
+//
+//		
+//			
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//	}
 	
 	public List<RegistroDTO> listar() {
 		try {
@@ -116,14 +109,15 @@ public class GestionMediciones implements Serializable{
 
 	public void onFormularioChange() {
 		try {
-	        if (formulario != null && !"".equals(formulario)) {
+	        if (form!=null) { //formulario != null && !"".equals(formulario)           || !form.equals("")
 	        	formulario = formularioBean.obtenerFormulario(form);
 	        	casillas = formulario.getCasillas();
 	        } else {
 	        	casillas = new ArrayList<>();
 	        }
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			casillas = new ArrayList<>();
+			e.printStackTrace();
 		}
     }
 	

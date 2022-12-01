@@ -23,9 +23,11 @@
 	                        </div>
 	                    </div>
 	                    <div class="ibox-content">
-	                    	<f:metadata>
-							    <f:event type="preRenderView" listener="#{gestionMediciones.preRenderView}"/>
-							</f:metadata>
+	                    
+	                    
+
+							
+							
 							<form jsf:id="medicion" class="form-horizontal">
 								<div class="row">
 									<div class="col-sm-1 pt-2">
@@ -50,7 +52,7 @@
 											<f:selectItem itemLabel="Seleccione un formulario" itemValue="" noSelectionOption="true"/>
 											<f:selectItems value="#{gestionFormularios.listar()}"
 												var="f" itemLabel="#{f.nombre}"
-												itemValue="#{d.id}" />
+												itemValue="#{f.nombre}" />
 											<p:ajax listener="#{gestionMediciones.onFormularioChange}" update="uiRepeat"/>
 										</p:selectOneMenu>
 									</div>

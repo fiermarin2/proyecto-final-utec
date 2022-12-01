@@ -48,11 +48,6 @@
 							                <h:outputText value="#{casilla.descripcion}"/>
 							            </p:column>
 										<p:column headerText="Acciones">
-											<p:link outcome="frmCasillas.xhtml">
-									      		<f:param name="id" value="${casilla.id}"/>
-								    			<f:param name="modalidad" value="update" />
-								                <i class="btn btn-xs btn-default pi pi-pencil"></i>
-									        </p:link>
 									        <p:spacer width="2" />
 									        <p:commandLink action="#{gestionCasillas.eliminarCasilla()}">
 									      		<f:param name="id" value="${casilla.id}"/>
