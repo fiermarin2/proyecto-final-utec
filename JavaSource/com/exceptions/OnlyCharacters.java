@@ -14,7 +14,7 @@ import javax.faces.validator.ValidatorException;
 public class OnlyCharacters implements Validator{
 	
 	//private static final String CHARACTERS = "[1-9]/[a-zA-Z](-[1-9]){3,4}";  [a-zA-Z]+
-	private static final String CHARACTERS = "[a-zA-Z ]+";
+	private static final String CHARACTERS = "^[a-zA-Z_ ]*$";
 			private Pattern pattern;
 			private Matcher matcher;
 			

@@ -142,11 +142,11 @@ public class GestionUsuarios implements Serializable{
 						contrasena = usuario.getContrasena().toString();
 						tipoUsuario = usuario.getTipo().toString();
 					}
-					nombre = usuario.getNombre();
-					apellido = usuario.getApellido();
-					mail = usuario.getMail();
-					contrasena = usuario.getContrasena().toString();
-					tipoUsuario = usuario.getTipo().toString();
+//					nombre = usuario.getNombre();
+//					apellido = usuario.getApellido();
+//					mail = usuario.getMail();
+//					contrasena = usuario.getContrasena().toString();
+//					tipoUsuario = usuario.getTipo().toString();
 					
 				} else {
 					usuario = new UsuarioDTO();
@@ -164,12 +164,12 @@ public class GestionUsuarios implements Serializable{
 					//tipoUsuario = "";
 				}
 				
-				if (modalidad != null && modalidad.contentEquals("update")) {
-					modoEdicion = true;
-				}else if (modalidad != null && modalidad.contentEquals("insert")) {
+				if (modalidad.contentEquals("update")) {
+					modoEdicion = false;
+				}else if (modalidad.contentEquals("insert")) {
 					modoEdicion = false;
 				}else {
-					modoEdicion = false;
+					modoEdicion = true;
 					modalidad="insert";
 				}
 			
@@ -249,11 +249,10 @@ public class GestionUsuarios implements Serializable{
 				return "menuUsuarios";
 			} else {
 				usuarioNuevo.setId(usuario.getId());
-				this.modalidad="update";
+
 				beanu.modificar(usuarioNuevo);
 				FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se ha modificado el Usuario " + usuarioNuevo.getUsuario(), "");
 				FacesContext.getCurrentInstance().addMessage(null, facesMsg);
-				
 
 				return "menuUsuarios";
 			}	
