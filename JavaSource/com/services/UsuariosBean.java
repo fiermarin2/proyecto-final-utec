@@ -338,7 +338,6 @@ public class UsuariosBean implements Serializable {
 				usuario.setId(buscar(usuarioLDAP).getId());
 				modificar(usuario);
 			}
-
 		}catch(AuthenticationException e) {
 			System.out.println("Error de usuario o contraseña");
 

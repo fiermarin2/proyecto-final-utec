@@ -50,7 +50,7 @@
 											<f:selectItem itemLabel="Seleccione un formulario" itemValue="" noSelectionOption="true"/>
 											<f:selectItems value="#{gestionFormularios.listar()}"
 												var="f" itemLabel="#{f.nombre}"
-												itemValue="#{d.id}" />
+												itemValue="#{f.id}" />
 											<p:ajax listener="#{gestionMediciones.onFormularioChange}" update="uiRepeat"/>
 										</p:selectOneMenu>
 									</div>

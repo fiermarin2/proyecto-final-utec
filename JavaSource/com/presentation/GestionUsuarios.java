@@ -232,7 +232,6 @@ public class GestionUsuarios implements Serializable{
 				//falta tipo usuario.setTipo(TipoUsuario.AFICIONADO);
 				usuarioNuevo.setUsuario(nombreUsuario);
 				
-				
 				usuarioNuevo.setTipo(TipoUsuario.AFICIONADO);
 				((AficionadoDTO) usuarioNuevo).setOcupacion(ocupacion);
 				
@@ -251,11 +250,11 @@ public class GestionUsuarios implements Serializable{
 			} else {
 				usuarioNuevo.setId(usuario.getId());
 				this.modalidad="update";
-				
+				beanu.modificar(usuarioNuevo);
 				FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Se ha modificado el Usuario " + usuarioNuevo.getUsuario(), "");
 				FacesContext.getCurrentInstance().addMessage(null, facesMsg);
 				
-				beanu.modificar(usuarioNuevo);
+
 				return "menuUsuarios";
 			}	
 		} catch (Exception e) {

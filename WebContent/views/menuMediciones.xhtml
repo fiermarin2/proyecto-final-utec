@@ -77,7 +77,7 @@
 							            <p:rowExpansion>
 							            	<div class="card">
 							            		<p:commandButton value="XLS" styleClass="mr-2 mb-2">
-								                    <p:dataExporter type="xls" target="tbl2" fileName="mediciones" exporter="#{dataExporterView.prueba()}"/>
+								                    <p:dataExporter type="xls" target="tbl2" fileName="mediciones" />
 								                </p:commandButton>
 								            	<p:dataTable var="valor" id="tbl2" value="#{medicion.valor.entrySet().toArray()}">
 								            		<p:column headerText="Formulario" visible="false">

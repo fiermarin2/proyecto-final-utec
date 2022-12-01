@@ -58,7 +58,6 @@ public class LoginBean implements Serializable {
 	 */
 	@PostConstruct	
 	public void init(){
-
 		try {
 			usuario = new AdministradorDTO();
 			usuario.setNombre("Grupo 10");
@@ -79,7 +78,7 @@ public class LoginBean implements Serializable {
 				usuario.setNombre("Grupo 10");
 				beanu.modificar(usuario);
 			}
-
+			usuario = null;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -92,12 +91,12 @@ public class LoginBean implements Serializable {
 			usr = usr.toLowerCase();
 			
 			if (usr.contains("\\")) 
-				beanu.usuarioLDAP(usr, pwd);
+				usuario = beanu.usuarioLDAP(usr, pwd);
 			else
 				usuario = beanu.mapeo(daou.obtenerLogIn(usr, pwd.toCharArray()));
 
 
-			if (usuario != null) {
+			if (usuario.getId() != null) {
 				HttpSession ses = ( HttpSession ) FacesContext.getCurrentInstance().getExternalContext().getSession( true );
 				ses.setAttribute("id", usuario.getId());
 				ses.setAttribute("username", usr);
